@@ -11,6 +11,8 @@ journal.py
 自动根据data.txt中的所有期刊名字获取其中科院分级，如果无法查询分区会在结果中提示，然后将其按照在文件中的顺序粘贴到excel中即可
 部分结果可能会有误差，例如格式不完全匹配等，需要人工核对一下
 
+下面的配置存放在settings.py中
+
 该代码使用了kimi大模型，需要手动获得api key后才能使用
 api key获取地址：https://platform.moonshot.cn/console/api-keys
 
