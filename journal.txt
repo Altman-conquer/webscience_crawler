@@ -1,149 +1,71 @@
-SOENet: a multi-resolution network for sheep extraction from high-resolution remote sensing images	INTERNATIONAL JOURNAL OF DIGITAL EARTH
-CG-CFPANet: a multi-task network for built-up area extraction from SDGSAT-1 and Sentinel-2 remote sensing images	INTERNATIONAL JOURNAL OF DIGITAL EARTH
-Two-stage re-parameterization and sample disentanglement network for surveillance vehicle detection	MEASUREMENT SCIENCE AND TECHNOLOGY
-Accurate Representation Modeling and Interindividual Constraint Learning for Roadside Three-Dimensional Object Detection	IEEE TRANSACTIONS ON INDUSTRIAL INFORMATICS
-An efficient model for small object detection in the maritime environment	APPLIED OCEAN RESEARCH
-Dynamic Feature Focusing Network for small object detection	INFORMATION PROCESSING & MANAGEMENT
-A Step-Wise Domain Adaptation Detection Transformer for Object Detection under Poor Visibility Conditions	REMOTE SENSING
-Enhancing vehicle detection in intelligent transportation systems via autonomous UAV platform and YOLOv8 integration	APPLIED SOFT COMPUTING
-Smart traffic management of vehicles using faster R-CNN based deep learning method	SCIENTIFIC REPORTS
-NRPerson: A Non-Registered Multi-Modal Benchmark for Tiny Person Detection and Localization	ELECTRONICS
-A lightweight vehicle detection network fusing feature pyramid and channel attention	INTERNET OF THINGS
-Detection Technique Tailored for Small Targets on Water Surfaces in Unmanned Vessel Scenarios	JOURNAL OF MARINE SCIENCE AND ENGINEERING
-AlexDarkNet: Hybrid CNN architecture for real-time Traffic monitoring with unprecedented reliability	NEURAL COMPUTING & APPLICATIONS
-Super-Resolution GAN and Global Aware Object Detection System for Vehicle Detection in Complex Traffic Environments	IEEE ACCESS
-INTEGRATION OF DEEP LEARNING MODELS FOR VEHICLE COUNTING: TOWARDS OPTIMIZED PLANNING OF URBAN CHARGING INFRASTRUCTURES	8TH INTERNATIONAL CONFERENCE ON GEOINFORMATION ADVANCES, GEOADVANCES 2024, VOL. 48-4
-Object Detection, Recognition, and Tracking Algorithms for ADASs-A Study on Recent Trends	SENSORS
-Optimizing Road Traffic Surveillance: A Robust Hyper-Heuristic Approach for Vehicle Segmentation	IEEE ACCESS
-Oriented Ship Detection Based on Soft Thresholding and Context Information in SAR Images of Complex Scenes	IEEE TRANSACTIONS ON GEOSCIENCE AND REMOTE SENSING
-Multi-Pedestrian Tracking Based on KC-YOLO Detection and Identity Validity Discrimination Module	APPLIED SCIENCES-BASEL
-Towards Large-Scale Small Object Detection: Survey and Benchmarks	IEEE TRANSACTIONS ON PATTERN ANALYSIS AND MACHINE INTELLIGENCE
-CABDet: context-and-attention-based detector for small object detection in remote sensing images	JOURNAL OF APPLIED REMOTE SENSING
-GSDerainNet: A Deep Network Architecture Based on a Gaussian Shannon Filter for Single Image Deraining	REMOTE SENSING
-Progressive dilation dense residual fusion network for single-image deraining	IET IMAGE PROCESSING
-Vehicle detection in diverse traffic using an ensemble convolutional neural backbone via feature concatenation	TRANSPORTATION LETTERS-THE INTERNATIONAL JOURNAL OF TRANSPORTATION RESEARCH
-Select Informative Samples for Night-Time Vehicle Detection Benchmark in Urban Scenes	REMOTE SENSING
-Traffic Noise Assessment Using Intelligent Acoustic Sensors (Traffic Ear) and Vehicle Telematics Data	SENSORS
-Deep Learning Techniques for Vehicle Detection and Classification from Images/Videos: A Survey	SENSORS
-Adaptive single image defogging based on sky segmentation	MULTIMEDIA TOOLS AND APPLICATIONS
-LF-YOLO: A Lighter and Faster YOLO for Weld Defect Detection of X-Ray Image	IEEE SENSORS JOURNAL
-Latency-Aware Task Scheduling in Software-Defined Edge and Cloud Computing With Erasure-Coded Storage Systems	IEEE TRANSACTIONS ON CLOUD COMPUTING
-An improved anchor-free method for traffic scene object detection	MULTIMEDIA TOOLS AND APPLICATIONS
-Real-time vehicle target detection in inclement weather conditions based on YOLOv4	FRONTIERS IN NEUROROBOTICS
-A Fast and Accurate Real-Time Vehicle Detection Method Using Deep Learning for Unconstrained Environments	APPLIED SCIENCES-BASEL
-ResiDualGAN: Resize-Residual DualGAN for Cross-Domain Remote Sensing Images Semantic Segmentation	REMOTE SENSING
-Deep Texture-Aware Features for Camouflaged Object Detection	IEEE TRANSACTIONS ON CIRCUITS AND SYSTEMS FOR VIDEO TECHNOLOGY
-Representative Feature Alignment for Adaptive Object Detection	IEEE TRANSACTIONS ON CIRCUITS AND SYSTEMS FOR VIDEO TECHNOLOGY
-PerspectiveNet: An Object Detection Method With Adaptive Perspective Box Network Based on Density-Aware	IEEE TRANSACTIONS ON INTELLIGENT TRANSPORTATION SYSTEMS
-A vehicle detection method based on disparity segmentation	MULTIMEDIA TOOLS AND APPLICATIONS
-Real-time dense traffic detection using lightweight backbone and improved path aggregation feature pyramid network	JOURNAL OF INDUSTRIAL INFORMATION INTEGRATION
-Knowledge Fusion Distillation: Improving Distillation with Multi-scale Attention Mechanisms	NEURAL PROCESSING LETTERS
-YOLO NFPEM: A More Accurate Iris Detector	ARTIFICIAL INTELLIGENCE IN HCI, AI-HCI 2023, PT II
-Study on Vehicle Recognition Algorithm Based on Convolutional Neural Network	2023 3RD ASIA-PACIFIC CONFERENCE ON COMMUNICATIONS TECHNOLOGY AND COMPUTER SCIENCE, ACCTCS
-Real-time face mask position recognition system using YOLO models for preventing COVID-19 disease spread in public places	INTERNATIONAL JOURNAL OF AD HOC AND UBIQUITOUS COMPUTING
-Printed Circuit Board Defect Detection Methods Based on Image Processing, Machine Learning and Deep Learning: A Survey	IEEE ACCESS
-A CNN-Transformer Hybrid Model Based on CSWin Transformer for UAV Image Object Detection	IEEE JOURNAL OF SELECTED TOPICS IN APPLIED EARTH OBSERVATIONS AND REMOTE SENSING
-PVDet: Towards pedestrian and vehicle detection on gigapixel-level images	ENGINEERING APPLICATIONS OF ARTIFICIAL INTELLIGENCE
-Scale Invariant low frame rate tracking	EXPERT SYSTEMS WITH APPLICATIONS
-2D Winograd CNN Chip for COVID-19 and Pneumonia Detection	APPLIED SCIENCES-BASEL
-Achieving Adaptive Visual Multi-Object Tracking with Unscented Kalman Filter	SENSORS
-Mixed Stage Partial Network and Background Data Augmentation for Surveillance Object Detection	IEEE TRANSACTIONS ON INTELLIGENT TRANSPORTATION SYSTEMS
-A Robust Framework for Object Detection in a Traffic Surveillance System	ELECTRONICS
-Swin transformer based vehicle detection in undisciplined traffic environment	EXPERT SYSTEMS WITH APPLICATIONS
-Binary residual feature pyramid network: An improved feature fusion module based on double-channel residual pyramid structure for autonomous detection algorithm	IET INTELLIGENT TRANSPORT SYSTEMS
-Industrial gearbox fault diagnosis based on multi-scale convolutional neural networks and thermal imaging	ISA TRANSACTIONS
-Semi-MoreGAN: Semi-supervised Generative Adversarial Network for Mixture of Rain Removal	COMPUTER GRAPHICS FORUM
-A Two-Branch Pedestrian Detection Method for Small and Blurred Target	IEEJ TRANSACTIONS ON ELECTRICAL AND ELECTRONIC ENGINEERING
-Making You Only Look Once Faster: Toward Real-Time Intelligent Transportation Detection	IEEE INTELLIGENT TRANSPORTATION SYSTEMS MAGAZINE
-An Automated Learning Framework With Limited and Cross-Domain Data for Traffic Equipment Detection From Surveillance Videos	IEEE TRANSACTIONS ON INTELLIGENT TRANSPORTATION SYSTEMS
-Vision-Based Autonomous Vehicle Systems Based on Deep Learning: A Systematic Literature Review	APPLIED SCIENCES-BASEL
-Vehicle fusion detection in visible and infrared thermal images via spare network and dynamic weight coefficient-based Dempster-Shafer evidence theory	JOURNAL OF APPLIED REMOTE SENSING
-Orientation aware weapons detection in visual data: a benchmark dataset	COMPUTING
-Last Decade in Vehicle Detection and Classification: A Comprehensive Survey	ARCHIVES OF COMPUTATIONAL METHODS IN ENGINEERING
-A Two-Stage Hybrid Extreme Learning Model for Short-Term Traffic Flow Forecasting	MATHEMATICS
-Traffic state prediction using conditionally Gaussian observed Markov fuzzy switching model	JOURNAL OF INTELLIGENT TRANSPORTATION SYSTEMS
-SA-YOLOv3: An Efficient and Accurate Object Detector Using Self-Attention Mechanism for Autonomous Driving	IEEE TRANSACTIONS ON INTELLIGENT TRANSPORTATION SYSTEMS
-Efficient multi-model integration neural network framework for nighttime vehicle detection	MULTIMEDIA TOOLS AND APPLICATIONS
-Covariance Attention for Semantic Segmentation	IEEE TRANSACTIONS ON PATTERN ANALYSIS AND MACHINE INTELLIGENCE
-Recent Advances in Vision-Based On-Road Behaviors Understanding: A Critical Survey	SENSORS
-A Traffic Event Detection Method Based on Random Forest and Permutation Importance	MATHEMATICS
-Slicing-Based Reliable Resource Orchestration for Secure Software-Defined Edge-Cloud Computing Systems	IEEE INTERNET OF THINGS JOURNAL
-Real-Time Monocular Joint Perception Network for Autonomous Driving	IEEE TRANSACTIONS ON INTELLIGENT TRANSPORTATION SYSTEMS
-A Survey of the Four Pillars for Small Object Detection: Multiscale Representation, Contextual Information, Super-Resolution, and Region Proposal	IEEE TRANSACTIONS ON SYSTEMS MAN CYBERNETICS-SYSTEMS
-Dense Traffic Detection at Highway-Railroad Grade Crossings	IEEE TRANSACTIONS ON INTELLIGENT TRANSPORTATION SYSTEMS
-Traffic sign detection based on improved faster R-CNN for autonomous driving	JOURNAL OF SUPERCOMPUTING
-A complementary and precise vehicle detection approach in RGB-T images via semi-supervised transfer learning and decision-level fusion	INTERNATIONAL JOURNAL OF REMOTE SENSING
-A Robust Vehicle Detection Model Based on Attention and Multi-scale Feature Fusion	2022 14TH INTERNATIONAL CONFERENCE ON WIRELESS COMMUNICATIONS AND SIGNAL PROCESSING, WCSP
-Small object detection combining attention mechanism and a novel FPN	JOURNAL OF INTELLIGENT & FUZZY SYSTEMS
-A lightweight deep neural network with higher accuracy	PLOS ONE
-Traffic incident detection based on a global trajectory spatiotemporal map	COMPLEX & INTELLIGENT SYSTEMS
-A Real-Time Object Detector for Autonomous Vehicles Based on YOLOv4	COMPUTATIONAL INTELLIGENCE AND NEUROSCIENCE
-A Vision-Based Pipeline for Vehicle Counting, Speed Estimation, and Classification	IEEE TRANSACTIONS ON INTELLIGENT TRANSPORTATION SYSTEMS
-Vehicle Detection and Disparity Estimation Using Blended Stereo Images	IEEE TRANSACTIONS ON INTELLIGENT VEHICLES
-Cloud Control System Architectures, Technologies and Applications on Intelligent and Connected Vehicles: a Review	CHINESE JOURNAL OF MECHANICAL ENGINEERING
-Attention guided contextual feature fusion network for salient object detection	IMAGE AND VISION COMPUTING
-Deep Learning for Unmanned Aerial Vehicle-Based Object Detection and Tracking: A Survey	IEEE GEOSCIENCE AND REMOTE SENSING MAGAZINE
-Pedestrian and Vehicle Detection in Autonomous Vehicle Perception Systems-A Review	SENSORS
-Channel spatial attention based single-shot object detector for autonomous vehicles	MULTIMEDIA TOOLS AND APPLICATIONS
-Application of Convolution Neural Network (CNN) Model Combined with Pyramid Algorithm in Aerobics Action Recognition	COMPUTATIONAL INTELLIGENCE AND NEUROSCIENCE
-Vehicle Detection in Remote Sensing Image Based on Machine Vision	COMPUTATIONAL INTELLIGENCE AND NEUROSCIENCE
-Vehicle Detection in Very-High-Resolution Remote Sensing Images Based on an Anchor-Free Detection Model with a More Precise Foveal Area	ISPRS INTERNATIONAL JOURNAL OF GEO-INFORMATION
-Oil Well Detection via Large-Scale and High-Resolution Remote Sensing Images Based on Improved YOLO v4	REMOTE SENSING
-A new comparison framework to survey neural networks-based vehicle detection and classification approaches	INTERNATIONAL JOURNAL OF COMMUNICATION SYSTEMS
-Research on highway vehicle detection based on faster R-CNN and domain adaptation	APPLIED INTELLIGENCE
-Accurate and efficient vehicle detection framework based on SSD algorithm	IET IMAGE PROCESSING
-Multiscale Feature Learning Based on Enhanced Feature Pyramid for Vehicle Detection	COMPLEXITY
-YOLOv3-MT: A YOLOv3 using multi-target tracking for vehicle visual detection	APPLIED INTELLIGENCE
-A Real-Time Multi-Vehicle Tracking Framework in Intelligent Vehicular Networks	CHINA COMMUNICATIONS
-A lightweight Tiny-YOLOv3 vehicle detection approach	JOURNAL OF REAL-TIME IMAGE PROCESSING
-Offset Detection of Grate Trolley's Side Plate Based on YOLOv4	JOURNAL OF SENSORS
-A fast and effective video vehicle detection method leveraging feature fusion and proposal temporal link	JOURNAL OF REAL-TIME IMAGE PROCESSING
-On-road vehicle detection in varying weather conditions using faster R-CNN with several region proposal networks	MULTIMEDIA TOOLS AND APPLICATIONS
-Research on intelligent risk early warning of open-pit blasting site based on deep learning	ENERGY SOURCES PART A-RECOVERY UTILIZATION AND ENVIRONMENTAL EFFECTS
-End-to-end trainable network for degraded license plate detection via vehicle-plate relation mining	NEUROCOMPUTING
-U-FPNDet: A one-shot traffic object detector based on U-shaped feature pyramid module	IET IMAGE PROCESSING
-ScanEV-A neural network-based tool for the automated detection of extracellular vesicles in TEM images	MICRON
-A traffic flow estimation method based on unsupervised change detection	MULTIMEDIA SYSTEMS
-Review on Vehicle Detection Technology for Unmanned Ground Vehicles	SENSORS
-Multi-object Tracking for Urban and Multilane Traffic: Building Blocks for Real-World Application	PROCEEDINGS OF THE 23RD INTERNATIONAL CONFERENCE ON ENTERPRISE INFORMATION SYSTEMS (ICEIS 2021), VOL 1
-Research on Traffic Target Detection Method Based on Improved YOLOv3	2021 4TH INTERNATIONAL CONFERENCE ON INTELLIGENT AUTONOMOUS SYSTEMS (ICOIAS 2021)
-Vehicle Detection and Tracking using YOLO and DeepSORT	11TH IEEE SYMPOSIUM ON COMPUTER APPLICATIONS & INDUSTRIAL ELECTRONICS (ISCAIE 2021)
-Forground-Guided Vehicle Perception Framework	2020 25TH INTERNATIONAL CONFERENCE ON PATTERN RECOGNITION (ICPR)
-YOLOv4-5D: An Effective and Efficient Object Detector for Autonomous Driving	IEEE TRANSACTIONS ON INSTRUMENTATION AND MEASUREMENT
-Single-Image Real-Time Rain Removal Based on Depth-Guided Non-Local Features	IEEE TRANSACTIONS ON IMAGE PROCESSING
-Defect detection of printed circuit board based on lightweight deep convolution network	IET IMAGE PROCESSING
-Real-time monitoring of traffic parameters	JOURNAL OF BIG DATA
-Research on Object Detection Algorithm Based on Multilayer Information Fusion	MATHEMATICAL PROBLEMS IN ENGINEERING
-A steel surface defect inspection approach towards smart industrial monitoring	JOURNAL OF INTELLIGENT MANUFACTURING
-Small vehicle classification in the wild using generative adversarial network	NEURAL COMPUTING & APPLICATIONS
-Identification of distinguishing characteristics of intersections based on statistical analysis and data from video cameras	JOURNAL OF BIG DATA
-Vehicle Detection with Self-Training for Adaptative Video Processing Embedded Platform	APPLIED SCIENCES-BASEL
-Deeply Supervised Z-Style Residual Network Devotes to Real-Time Environment Perception for Autonomous Driving	IEEE TRANSACTIONS ON INTELLIGENT TRANSPORTATION SYSTEMS
-Traffic scene semantic segmentation using self -attention mechanism and bi-directional GRU to correlate context	NEUROCOMPUTING
-The Capacity of the Road Network: Data Collection and Statistical Analysis of Traffic Characteristics	ENERGIES
-Uncertainty-based Object Detector for Autonomous Driving Embedded Platforms	2020 2ND IEEE INTERNATIONAL CONFERENCE ON ARTIFICIAL INTELLIGENCE CIRCUITS AND SYSTEMS (AICAS 2020)
-Top-down, Spatio-Temporal Attentional Guidance for On-road Object Detection	2020 IEEE 23RD INTERNATIONAL CONFERENCE ON INTELLIGENT TRANSPORTATION SYSTEMS (ITSC)
-A lightweight vehicle detection and tracking technique for advanced driving assistance systems	JOURNAL OF INTELLIGENT & FUZZY SYSTEMS
-KL-DIVERGENCE-BASED REGION PROPOSAL NETWORK FOR OBJECT DETECTION	2020 IEEE INTERNATIONAL CONFERENCE ON IMAGE PROCESSING (ICIP)
-A Lightweight CNN Model for Refining Moving Vehicle Detection From Satellite Videos	IEEE ACCESS
-A Robust Vehicle Detection Scheme for Intelligent Traffic Surveillance Systems in Smart Cities	IEEE ACCESS
-CODAN: Counting-driven Attention Network for Vehicle Detection in Congested Scenes	MM '20: PROCEEDINGS OF THE 28TH ACM INTERNATIONAL CONFERENCE ON MULTIMEDIA
-Environmental Sensitivity Evaluation of Neural Networks in Unmanned Vehicle Perception Module	2020 IEEE WIRELESS COMMUNICATIONS AND NETWORKING CONFERENCE (WCNC)
-Pyramid Spatial Context Features for Salient Object Detection	IEEE ACCESS
-A Classification Algorithm Based on Complex Number Feature	IEEE ACCESS
-Feature and Box Propagation for Video Vehicle Detection	CICTP 2020: TRANSPORTATION EVOLUTION IMPACTING FUTURE MOBILITY
-A noise-immune Kalman filter for short-term traffic flow forecasting	PHYSICA A-STATISTICAL MECHANICS AND ITS APPLICATIONS
-Multi-task learning for quality assessment of fetal head ultrasound images	MEDICAL IMAGE ANALYSIS
-Improving Faster R-CNN Framework for Fast Vehicle Detection	MATHEMATICAL PROBLEMS IN ENGINEERING
-A Multibranch Object Detection Method for Traffic Scenes	COMPUTATIONAL INTELLIGENCE AND NEUROSCIENCE
-An Efficient and Scene-Adaptive Algorithm for Vehicle Detection in Aerial Images Using an Improved YOLOv3 Framework	ISPRS INTERNATIONAL JOURNAL OF GEO-INFORMATION
-Orientation- and Scale-Invariant Multi-Vehicle Detection and Tracking from Unmanned Aerial Videos	REMOTE SENSING
-Using Vehicle Synthesis Generative Adversarial Networks to Improve Vehicle Detection in Remote Sensing Images	ISPRS INTERNATIONAL JOURNAL OF GEO-INFORMATION
-Traffic flow estimation with data from a video surveillance camera	JOURNAL OF BIG DATA
-Assessment of Convolution Neural Networks for Wetland Mapping with Landsat in the Central Canadian Boreal Forest Region	REMOTE SENSING
-Vehicle Detection in Urban Traffic Surveillance Images Based on Convolutional Neural Networks with Feature Concatenation	SENSORS
-Depth-attentional Features for Single-image Rain Removal	2019 IEEE/CVF CONFERENCE ON COMPUTER VISION AND PATTERN RECOGNITION (CVPR 2019)
-Joint Object Detection and Depth Estimation in Multiplexed Image	IEEE ACCESS
-Part-Aware Region Proposal for Vehicle Detection in High Occlusion Environment	IEEE ACCESS
-SSD-MSN: An Improved Multi-Scale Object Detection Network Based on SSD	IEEE ACCESS
-DALocNet: Improving Localization Accuracy for Domain Adaptive Object Detection	IEEE ACCESS
+JOURNAL OF ADVANCED TRANSPORTATION
+SENSORS
+KNOWLEDGE-BASED SYSTEMS
+PROCEEDINGS OF THE INSTITUTION OF CIVIL ENGINEERS-TRANSPORT
+IET INTELLIGENT TRANSPORT SYSTEMS
+SOFT COMPUTING
+MATHEMATICS
+ENGINEERING APPLICATIONS OF ARTIFICIAL INTELLIGENCE
+NEUROCOMPUTING
+IEEE ACCESS
+2023 3RD INTERNATIONAL CONFERENCE ON INFORMATION COMMUNICATION AND SOFTWARE ENGINEERING, ICICSE
+APPLIED SCIENCES-BASEL
+MATHEMATICS
+TRANSPORTATION RESEARCH RECORD
+COMPUTATIONAL INTELLIGENCE AND NEUROSCIENCE
+WIRELESS COMMUNICATIONS & MOBILE COMPUTING
+MATHEMATICS
+JOURNAL OF TRANSPORTATION ENGINEERING PART A-SYSTEMS
+MATHEMATICS
+JOURNAL OF CENTRAL SOUTH UNIVERSITY
+SUSTAINABILITY
+APPLIED SOFT COMPUTING
+ALGORITHMS AND ARCHITECTURES FOR PARALLEL PROCESSING, ICA3PP 2021, PT II
+IEEE TRANSACTIONS ON INTELLIGENT TRANSPORTATION SYSTEMS
+COMPUTATIONAL INTELLIGENCE
+PHYSICA A-STATISTICAL MECHANICS AND ITS APPLICATIONS
+IET INTELLIGENT TRANSPORT SYSTEMS
+IEEE TRANSACTIONS ON INTELLIGENT TRANSPORTATION SYSTEMS
+COMPLEXITY
+COMPUTERS & INDUSTRIAL ENGINEERING
+NEUROCOMPUTING
+INFORMATION SCIENCES
+INTERNATIONAL CONFERENCE ON SMART TRANSPORTATION AND CITY ENGINEERING 2021
+2020 25TH INTERNATIONAL CONFERENCE ON PATTERN RECOGNITION (ICPR)
+28TH EUROPEAN SIGNAL PROCESSING CONFERENCE (EUSIPCO 2020)
+JOURNAL OF ADVANCED TRANSPORTATION
+COMPUTATIONAL AND MATHEMATICAL METHODS IN MEDICINE
+ELECTRONICS
+JOURNAL OF AMBIENT INTELLIGENCE AND HUMANIZED COMPUTING
+JOURNAL OF COMPUTATIONAL PHYSICS
+SOFT COMPUTING
+NEURAL COMPUTING & APPLICATIONS
+HEALTH INFORMATICS JOURNAL
+CHAOS
+APPLIED SOFT COMPUTING
+
+2020 IEEE INTERNATIONAL CONFERENCE ON SYSTEMS, MAN, AND CYBERNETICS (SMC)
+IEEE ACCESS
+IEEE ACCESS
+IEEE ACCESS
+APPLIED ENERGY
+IEEE ACCESS
+PHYSICA A-STATISTICAL MECHANICS AND ITS APPLICATIONS
+KNOWLEDGE-BASED SYSTEMS
+OPERATIONAL RESEARCH
+NEUROCOMPUTING
+IET INTELLIGENT TRANSPORT SYSTEMS
+IET RENEWABLE POWER GENERATION
+IET INTELLIGENT TRANSPORT SYSTEMS
+JOURNAL OF INTELLIGENT TRANSPORTATION SYSTEMS
+NEURAL PROCESSING LETTERS
+
+2019 15TH INTERNATIONAL CONFERENCE ON MOBILE AD-HOC AND SENSOR NETWORKS (MSN 2019)
+IEEE ACCESS
+JOURNAL OF ADVANCED TRANSPORTATION
+JOURNAL OF SENSORS
+IEEE ACCESS
+KNOWLEDGE-BASED SYSTEMS
+ENERGY
+2ND INTERNATIONAL CONFERENCE ON INFORMATION SYSTEM AND DATA MINING (ICISDM 2018)
+IEEE ACCESS

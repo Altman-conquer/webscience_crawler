@@ -27,6 +27,10 @@ def main():
     )
 
     for journal in journal_set:
+        if journal == '':
+            journal_map[journal] = ''
+            continue
+
         completion = client.chat.completions.create(
             model="moonshot-v1-8k",
             messages=[

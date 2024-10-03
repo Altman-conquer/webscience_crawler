@@ -11,6 +11,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 from translate import translate
 
+
 # 发送请求
 def askurl(url):
     # 添加请求的头部
@@ -62,6 +63,8 @@ def query_url(driver, essay_url):
 
     authors = []
 
+    check_status(driver)
+
     while True:
         try:
             WebDriverWait(driver, 10).until(
@@ -78,8 +81,13 @@ def query_url(driver, essay_url):
         if len(author_info) == 0:
             break
 
+        author_name = driver.find_element(By.CSS_SELECTOR, f'#SumAuthTa-FrAuthStandard-author-en-{index} > span').text
+        author_name = ' '.join(author_name.strip(' ').split(','))
+        while author_name.find('  ') != -1:
+            author_name = author_name.replace('  ', ' ')
+
         authors.append(
-            {'name': driver.find_element(By.CSS_SELECTOR, f'#SumAuthTa-DisplayName-author-en-{index} > span').text,
+            {'name': author_name,
              'url': driver.find_element(By.CSS_SELECTOR, f'#SumAuthTa-DisplayName-author-en-{index}').get_attribute(
                  'href')})
 
@@ -88,25 +96,56 @@ def query_url(driver, essay_url):
 
         # Wait for the element to be present with a timeout of 10 seconds
         try:
-
+            # WebDriverWait(driver, 10).until(
+            #     EC.presence_of_element_located((By.CSS_SELECTOR,
+            #                                     'body > app-wos > main > div > div > div.holder.new-wos-style > div > div > div.held > app-input-route > app-author-page > div > div > div.author-details-section > app-author-record-header > div > div > div > mat-card-title > h1'))
+            # )
+            # author_name = driver.find_elements(By.CSS_SELECTOR,
+            #                                    'body > app-wos > main > div > div > div.holder.new-wos-style > div > div > div.held > app-input-route > app-author-page > div > div > div.author-details-section > app-author-record-header > div > div > div > mat-card-title > h1')
+            # if len(author_name) != 0 and author_name[0].text != '':
+            #     author['name'] = author_name[0].text
             WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR,
                                                 'body > app-wos > main > div > div > div.holder.new-wos-style > div > div > div.held > app-input-route > app-author-page > div > div > div.author-details-section > app-author-record-header > div > div > div > mat-card-content > div.inline-container > span > span:nth-child(1)'))
             )
-
             author_loc = driver.find_elements(By.CSS_SELECTOR,
                                               'body > app-wos > main > div > div > div.holder.new-wos-style > div > div > div.held > app-input-route > app-author-page > div > div > div.author-details-section > app-author-record-header > div > div > div > mat-card-content > div.inline-container > span > span:nth-child(1)')
             if len(author_loc) != 0:
                 author['location'] = author_loc[0].text
+
+
         except Exception as e:
             author['location'] = ''
+            check_status(driver)
 
     return authors
 
 
+def check_status(driver):
+    """
+    检查是否需要手动处理验证码
+    :param driver:
+    :return:
+    """
+    while True:
+        try:
+            WebDriverWait(driver, 10).until_not(
+                EC.presence_of_element_located(
+                    (By.CSS_SELECTOR, '#mat-dialog-0 > app-captcha-details > div > div > div > p'))
+            )
+            break
+        except Exception as e:
+            print('请手动处理验证码')
+
+
 def cataloge_page(url):
     driver = askurl(url)
-    input('是否可以进行下一步')
+
+    time.sleep(5)
+
+    check_status(driver)
+
+    # input('是否可以进行下一步')
 
     WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.CSS_SELECTOR,
@@ -157,4 +196,4 @@ def cataloge_page(url):
 
 if __name__ == '__main__':
     cataloge_page(
-        'https://webofscience.clarivate.cn/wos/alldb/summary/8e619475-1431-4744-ab69-e9525f00f79b-010d9bb790/date-descending/2')
+        'https://webofscience.clarivate.cn/wos/alldb/summary/3c1bdf30-74f9-47a1-be3a-07d6c2c00ac8-010de669e3/date-descending/1')

@@ -49,4 +49,4 @@ def translate(text):
 
 
 if __name__ == '__main__':
-    print(translate("Chang'an university"))
+    print(translate("Beijing Univ Technol"))
