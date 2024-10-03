@@ -81,7 +81,12 @@ def query_url(driver, essay_url):
         if len(author_info) == 0:
             break
 
-        author_name = driver.find_element(By.CSS_SELECTOR, f'#SumAuthTa-FrAuthStandard-author-en-{index} > span').text
+        try:
+            author_name = driver.find_element(By.CSS_SELECTOR,
+                                              f'#SumAuthTa-FrAuthStandard-author-en-{index} > span').text
+        except Exception as e:
+            author_name = driver.find_element(By.CSS_SELECTOR, f'#SumAuthTa-DisplayName-author-en-{index} > span').text
+
         author_name = ' '.join(author_name.strip(' ').split(','))
         while author_name.find('  ') != -1:
             author_name = author_name.replace('  ', ' ')
@@ -175,14 +180,13 @@ def cataloge_page(url):
                 print('No more essays')
                 break
 
-    for essay in essays:
-        essay['authors'] = query_url(driver, essay['url'])
-        print(essay['title'], essay['authors'])
-
     with open('output.csv', 'w', newline='', encoding='utf-8') as csvfile:
         writer = csv.writer(csvfile)
         for essay in essays:
             row = [essay['title'], essay['url']]
+
+            essay['authors'] = query_url(driver, essay['url'])
+            print(essay['title'], essay['authors'])
 
             if essay.get('authors') is not None:
                 row.extend(
@@ -196,4 +200,4 @@ def cataloge_page(url):
 
 if __name__ == '__main__':
     cataloge_page(
-        'https://webofscience.clarivate.cn/wos/alldb/summary/3c1bdf30-74f9-47a1-be3a-07d6c2c00ac8-010de669e3/date-descending/1')
+        'https://webofscience.clarivate.cn/wos/alldb/summary/8807fbd3-81c0-4807-94ce-c13d0c0c92c7-010debe6c0/date-descending/1')

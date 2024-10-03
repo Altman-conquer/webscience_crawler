@@ -1,4 +1,5 @@
 import csv
+import re
 import time
 
 from openai import OpenAI
@@ -69,15 +70,46 @@ def temp():
         tmp = line.split(' ')
         journal = ' '.join(tmp[:-1])
         zone = tmp[-1]
+        # replace '将...为' to ''
+        zone = re.sub(r'将.*为', '', zone)
+
+        zone = zone.replace('"', '')
+
         # replace 1,2,3,4 to 一，二，三，四
         zone = zone.replace('1', '一').replace('2', '二').replace('3', '三').replace('4', '四')
+
+        if zone == '':
+            zone = '未分区'
+
         journal_map[journal] = zone
 
-    with open('journal_map.csv', 'w', newline='', encoding='utf-8') as csvfile:
+    # with open('journal_map.csv', 'w', newline='', encoding='utf-8') as csvfile:
+    #     writer = csv.writer(csvfile)
+    #     writer.writerows([[journal, journal_map[journal]] for journal in journal_map])
+
+
+def format_csv():
+    with open('journal.csv', 'r', encoding='utf-8') as file:
+        data = file.read().splitlines()
+
+    result = []
+    for line in data:
+        tmp = line.split(',')
+        journal = ' '.join(tmp[:-1])
+        zone = tmp[-1]
+        # replace '将...为' to ''
+        zone = re.sub(r'将.*为', '', zone)
+
+        # replace 1,2,3,4 to 一，二，三，四
+        zone = zone.replace('1', '一').replace('2', '二').replace('3', '三').replace('4', '四')
+        result.append([journal, zone])
+
+    with open('journal_formatted.csv', 'w', newline='', encoding='utf-8') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerows([[journal, journal_map[journal]] for journal in journal_map])
+        writer.writerows(result)
 
 
 if __name__ == '__main__':
     # temp()
     main()
+    format_csv()

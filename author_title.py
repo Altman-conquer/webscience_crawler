@@ -9,7 +9,7 @@ def main():
     import pandas as pd
 
     # Read the Excel file
-    df = pd.read_excel('author_title_input.xlsx')
+    df = pd.read_excel('author_title_input.xlsx', header=None)
 
     result = []
 
@@ -22,9 +22,9 @@ def main():
         # Iterate through each cell in the row
         tmp_result = []
         for cell in row:
-            if pd.isna(cell):
+            if pd.isna(cell) or cell == '':
                 continue
-            if str(cell).find('，') == -1:
+            if str(cell).find(',') == -1 or str(cell)[-1] == ',':
                 tmp_result.append(cell)
                 continue
 
@@ -41,12 +41,12 @@ def main():
 
             res = completion.choices[0].message.content.strip('。')
 
-            if '无法查询' in res:
+            if '无法查询' in res or '没有' in res or '未找到' in res or '无法' in res or '查询' in res:
                 tmp_result.append(cell)
+                print(cell)
             else:
-                tmp_result.append(f'{cell}￥{res}')
-
-            print(cell, res)
+                tmp_result.append(f'{cell}, {res}')
+                print(cell, res)
 
             time.sleep(30)
 
