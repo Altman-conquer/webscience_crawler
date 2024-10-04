@@ -1,3 +1,4 @@
+import os
 import time
 
 from openai import OpenAI
@@ -25,6 +26,7 @@ def main():
             if pd.isna(cell) or cell == '':
                 continue
             if str(cell).find(',') == -1 or str(cell)[-1] == ',':
+                print(f'skip {cell}')
                 tmp_result.append(cell)
                 continue
 
@@ -41,10 +43,16 @@ def main():
 
             res = completion.choices[0].message.content.strip('。')
 
-            if '无法查询' in res or '没有' in res or '未找到' in res or '无法' in res or '查询' in res:
+            if '无法查询' in res or '没有' in res or '未找到' in res or '无法' in res or '查询' in res or 'is not' in res or '不适用' in res:
                 tmp_result.append(cell)
                 print(cell)
             else:
+                res = res.strip(f'{cell}，头衔：')
+                res = res.strip(f'{cell}的头衔是：')
+                res = res.strip(f'{cell}的头衔是')
+                res = res.strip(f'{cell}：')
+                res = res.strip(f'{str(cell).split(",")[0]} 是 ')
+
                 tmp_result.append(f'{cell}, {res}')
                 print(cell, res)
 

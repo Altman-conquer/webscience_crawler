@@ -11,7 +11,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 from translate import translate
 
-
 # 发送请求
 def askurl(url):
     # 添加请求的头部
@@ -180,13 +179,22 @@ def cataloge_page(url):
                 print('No more essays')
                 break
 
+    for essay in essays:
+        essay['authors'] = query_url(driver, essay['url'])
+        print(essay['title'], essay['authors'])
+
+    return essays
+
+
+def main(urls: list[str]):
+    essays = []
+    for url in urls:
+        essays.extend(cataloge_page(url))
+
     with open('output.csv', 'w', newline='', encoding='utf-8') as csvfile:
         writer = csv.writer(csvfile)
         for essay in essays:
             row = [essay['title'], essay['url']]
-
-            essay['authors'] = query_url(driver, essay['url'])
-            print(essay['title'], essay['authors'])
 
             if essay.get('authors') is not None:
                 row.extend(
@@ -195,9 +203,26 @@ def cataloge_page(url):
                 )
             writer.writerow(row)
 
-    print(essays)
+
+def filter():
+    with open('output_filter.txt', 'r', encoding='utf-8') as file:
+        filter_journal = set(file.read().splitlines())
+
+    with open('output.csv', 'r', encoding='utf-8') as file:
+        data = file.read().splitlines()
+
+    result = []
+    for i in data:
+        if i.split(',')[0] not in filter_journal:
+            continue
+        result.append(i + '\n')
+
+    with open('output_filtered.csv', 'w', newline='', encoding='utf-8') as csvfile:
+        csvfile.writelines(result)
 
 
 if __name__ == '__main__':
-    cataloge_page(
-        'https://webofscience.clarivate.cn/wos/alldb/summary/8807fbd3-81c0-4807-94ce-c13d0c0c92c7-010debe6c0/date-descending/1')
+    main([
+        'https://webofscience.clarivate.cn/wos/woscc/summary/bde4e908-0758-4920-8715-0dffd69fbac6-010dfa675f/date-descending/2'
+    ])
+    # filter()
