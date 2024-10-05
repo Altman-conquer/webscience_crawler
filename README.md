@@ -19,7 +19,14 @@ journal.py
 该代码使用了kimi大模型，需要手动获得api key后才能使用
 api key获取地址：https://platform.moonshot.cn/console/api-keys
 
-该代码还使用了腾讯云的翻译功能，需要手动获得api key和api secret后才能使用
+翻译功能：可以用豆包大模型，或者腾讯云来进行翻译，默认为豆包大模型，若需要使用腾讯翻译，则需要在author.py中将translate_doubao改为translate
+配置说明
+字节的豆包lite-4k大模型来进行翻译，需要手动获得api key后才能使用
+https://console.volcengine.com/ark/region:ark+cn-beijing/model?vendor=Bytedance&view=LIST_VIEW
+然后在“在线推理”中创建一个新的推理接入点
+
+腾讯云的翻译功能，需要手动获得api key和api secret后才能使用
 api key和api secret获取地址：https://console.cloud.tencent.com/cam/capi
 然后还需要在控制台中启用机器翻译功能
 https://console.cloud.tencent.com/tmt
+

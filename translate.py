@@ -5,8 +5,9 @@ from tencentcloud.common.exception.tencent_cloud_sdk_exception import TencentClo
 from tencentcloud.common.profile.client_profile import ClientProfile
 from tencentcloud.common.profile.http_profile import HttpProfile
 from tencentcloud.tmt.v20180321 import tmt_client, models
+from volcenginesdkarkruntime import Ark
 
-from settings import TENCENT_API_KEY, TENCENT_API_SECRET, AZURE_TRANSLATE_KEY
+from settings import TENCENT_API_KEY, TENCENT_API_SECRET, AZURE_TRANSLATE_KEY, DOUBAO_API_KEY
 
 
 def translate(text):
@@ -42,14 +43,16 @@ def translate(text):
         resp = client.TextTranslate(req)
         # 输出json格式的字符串回包
         # print(resp.to_json_string())
-        return json.loads(resp.to_json_string()).get('TargetText')
+        target_text = json.loads(resp.to_json_string()).get('TargetText')
+        print(f'translate {text} to {target_text}')
+        return target_text
     except TencentCloudSDKException as err:
         print(err)
         return ''
 
 
 def translate_azure(text):
-    import requests, uuid, json
+    import requests, uuid
 
     # Add your key and endpoint
     key = AZURE_TRANSLATE_KEY
@@ -57,7 +60,7 @@ def translate_azure(text):
 
     # location, also known as region.
     # required if you're using a multi-service or regional (not global) resource. It can be found in the Azure portal on the Keys and Endpoint page.
-    location = "eastasia"
+    location = "global"
 
     path = '/translate'
     constructed_url = endpoint + path
@@ -84,8 +87,31 @@ def translate_azure(text):
     request = requests.post(constructed_url, params=params, headers=headers, json=body)
     response = request.json()
 
-    print(json.dumps(response, sort_keys=True, ensure_ascii=False, indent=4, separators=(',', ': ')))
+    return response[0].get('translations')[0].get('text')
+
+
+def translate_doubao(text):
+    client = Ark(
+        base_url="https://ark.cn-beijing.volces.com/api/v3",
+        api_key=DOUBAO_API_KEY,
+    )
+
+    completion = client.chat.completions.create(
+        model="ep-20240807115051-pzgm4",
+        messages=[
+            {"role": "system", "content": "你是豆包，是由字节跳动开发的 AI 人工智能助手"},
+            {"role": "user",
+             "content": f"将后面的内容翻译成中文，不要回答其他多余文字和符号，只需要返回一个结果\n\n{text}"},
+        ],
+    )
+
+    target_text = completion.choices[0].message.content
+    print(f'translate {text} to {target_text}')
+    return target_text
 
 
 if __name__ == '__main__':
-    print(translate("Beijing Univ Technol"))
+    text = 'Beihang University'
+    print(translate(text))
+    print(translate_azure(text))
+    print(translate_doubao(text))

@@ -9,10 +9,18 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
-from translate import translate
+from translate import translate, translate_doubao
+
+global_driver = None
 
 # 发送请求
 def askurl(url):
+    global global_driver
+    if global_driver is not None:
+        driver = webdriver.Edge()
+    else:
+        driver = webdriver.Edge()
+        global_driver = driver
     # 添加请求的头部
     # options = webdriver.EdgeOptions()								#开启启动参数
     # useragent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36 Edg/129.0.0.0'													#写入自己的useragent
@@ -20,26 +28,7 @@ def askurl(url):
     # options.add_argument("--proxy-server = http://{}".format(ip))	#代理ip ip要写自己的
 
     # 开启模拟浏览器
-    driver = webdriver.Edge()
     driver.get(url)
-
-    driver.add_cookie({'name': 'WOSSID', 'value': 'USW2EC0E65cTu65GGgyZaMAbmMJxo',
-                       'domain': 'webofscience.clarivate.cn', 'path': '/', 'httpOnly': True, 'secure': False})
-    driver.add_cookie({'name': '_sp_id.a11a',
-                       'value': 'e695f656-c250-4a17-b6ad-882f3c0bd472.1727678330.3.1727787686.1727772712.76c08a76-99a9-4e18-b73d-7a3f23968df5.b1bcac52-a948-43ef-9294-bdcdfbc37b25.bb4956cf-7fcc-42d4-ba39-11cf0cf8c2bf.1727781303988.155',
-                       'domain': 'webofscience.clarivate.cn', 'path': '/', 'httpOnly': False, 'secure': False})
-    driver.add_cookie(
-        {'name': '_sp_ses.a11a', 'value': '*', 'domain': 'webofscience.clarivate.cn', 'path': '/', 'httpOnly': False,
-         'secure': False})
-    driver.add_cookie(
-        {'name': 'dotmatics.elementalKey', 'value': '', 'domain': 'webofscience.clarivate.cn', 'path': '/',
-         'httpOnly': False, 'secure': False})
-    driver.add_cookie(
-        {'name': 'group', 'value': 'group-c', 'domain': 'webofscience.clarivate.cn', 'path': '/', 'httpOnly': False,
-         'secure': False})
-    driver.add_cookie(
-        {'name': 'sessionid', 'value': 'gozi9u6rhmlxcur4bqam48ya66kgeh02', 'domain': 'webofscience.clarivate.cn',
-         'path': '/', 'httpOnly': False, 'secure': False})
 
     # 关闭所有不需要的窗口
     # now = driver.current_window_handle					#获取当前的主窗口
@@ -64,8 +53,13 @@ def query_url(driver, essay_url):
 
     check_status(driver)
 
+    error_cnt = 0
     while True:
         try:
+            if error_cnt >= 2:
+                print('错误多次出现，强制返回')
+                return None
+
             WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, '#SumAuthTa-DisplayName-author-en-0'))
             )
@@ -73,6 +67,29 @@ def query_url(driver, essay_url):
         except Exception as e:
             print(e)
             input('出现错误, 请确认是否解决')
+            error_cnt += 1
+
+
+
+    addresses = []
+    for i in range(0, 10):
+        address_button = driver.find_elements(By.CSS_SELECTOR,
+                                              f'#FRAOrgTa-addressesShowHideBtn-{i} > span.mat-button-wrapper')
+        if len(address_button) > 0:
+            address_button = address_button[0]
+            address_button.click()
+
+            address = driver.find_elements(By.CSS_SELECTOR, f'#FRAOrgTa-RepOrgEnhancedName-addresses-{i}-0')
+        else:
+            address = driver.find_elements(By.CSS_SELECTOR,
+                                           f'#address_{i + 1} > span.value.padding-right-5--reversible.section-label-data.colonMark')
+
+        if len(address) > 0:
+            address = address[0].text.split(',')[0]
+        else:
+            break
+
+        addresses.append(address)
 
     for index in range(0, 8):
         author_info = driver.find_elements(By.CSS_SELECTOR, f'#SumAuthTa-DisplayName-author-en-{index}')
@@ -90,37 +107,51 @@ def query_url(driver, essay_url):
         while author_name.find('  ') != -1:
             author_name = author_name.replace('  ', ' ')
 
+        author_loc = driver.find_elements(By.CSS_SELECTOR, f'#SumAuthTa-FrAddrNbr-author-en-{index}-0')
+        if len(author_loc) > 0:
+            try:
+                author_loc = int(author_loc[0].text.strip(' ').lstrip('[').rstrip(']'))
+            except Exception as e:
+                print("error at int(author_loc[0].text.strip(' ').lstrip('[').rstrip(']'))")
+                print(e)
+                author_loc = -1
+        else:
+            author_loc = -1
+
         authors.append(
-            {'name': author_name,
-             'url': driver.find_element(By.CSS_SELECTOR, f'#SumAuthTa-DisplayName-author-en-{index}').get_attribute(
-                 'href')})
+            {
+                'name': author_name,
+                'url': driver.find_element(By.CSS_SELECTOR, f'#SumAuthTa-DisplayName-author-en-{index}').get_attribute(
+                    'href'),
+                'location': '' if author_loc == -1 else addresses[author_loc - 1]
+            })
 
-    for author in authors:
-        driver.get(author['url'])
-
-        # Wait for the element to be present with a timeout of 10 seconds
-        try:
-            # WebDriverWait(driver, 10).until(
-            #     EC.presence_of_element_located((By.CSS_SELECTOR,
-            #                                     'body > app-wos > main > div > div > div.holder.new-wos-style > div > div > div.held > app-input-route > app-author-page > div > div > div.author-details-section > app-author-record-header > div > div > div > mat-card-title > h1'))
-            # )
-            # author_name = driver.find_elements(By.CSS_SELECTOR,
-            #                                    'body > app-wos > main > div > div > div.holder.new-wos-style > div > div > div.held > app-input-route > app-author-page > div > div > div.author-details-section > app-author-record-header > div > div > div > mat-card-title > h1')
-            # if len(author_name) != 0 and author_name[0].text != '':
-            #     author['name'] = author_name[0].text
-            WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.CSS_SELECTOR,
-                                                'body > app-wos > main > div > div > div.holder.new-wos-style > div > div > div.held > app-input-route > app-author-page > div > div > div.author-details-section > app-author-record-header > div > div > div > mat-card-content > div.inline-container > span > span:nth-child(1)'))
-            )
-            author_loc = driver.find_elements(By.CSS_SELECTOR,
-                                              'body > app-wos > main > div > div > div.holder.new-wos-style > div > div > div.held > app-input-route > app-author-page > div > div > div.author-details-section > app-author-record-header > div > div > div > mat-card-content > div.inline-container > span > span:nth-child(1)')
-            if len(author_loc) != 0:
-                author['location'] = author_loc[0].text
-
-
-        except Exception as e:
-            author['location'] = ''
-            check_status(driver)
+    # for author in authors:
+    #     driver.get(author['url'])
+    #
+    #     # Wait for the element to be present with a timeout of 10 seconds
+    #     try:
+    #         # WebDriverWait(driver, 10).until(
+    #         #     EC.presence_of_element_located((By.CSS_SELECTOR,
+    #         #                                     'body > app-wos > main > div > div > div.holder.new-wos-style > div > div > div.held > app-input-route > app-author-page > div > div > div.author-details-section > app-author-record-header > div > div > div > mat-card-title > h1'))
+    #         # )
+    #         # author_name = driver.find_elements(By.CSS_SELECTOR,
+    #         #                                    'body > app-wos > main > div > div > div.holder.new-wos-style > div > div > div.held > app-input-route > app-author-page > div > div > div.author-details-section > app-author-record-header > div > div > div > mat-card-title > h1')
+    #         # if len(author_name) != 0 and author_name[0].text != '':
+    #         #     author['name'] = author_name[0].text
+    #         WebDriverWait(driver, 10).until(
+    #             EC.presence_of_element_located((By.CSS_SELECTOR,
+    #                                             'body > app-wos > main > div > div > div.holder.new-wos-style > div > div > div.held > app-input-route > app-author-page > div > div > div.author-details-section > app-author-record-header > div > div > div > mat-card-content > div.inline-container > span > span:nth-child(1)'))
+    #         )
+    #         author_loc = driver.find_elements(By.CSS_SELECTOR,
+    #                                           'body > app-wos > main > div > div > div.holder.new-wos-style > div > div > div.held > app-input-route > app-author-page > div > div > div.author-details-section > app-author-record-header > div > div > div > mat-card-content > div.inline-container > span > span:nth-child(1)')
+    #         if len(author_loc) != 0:
+    #             author['location'] = author_loc[0].text
+    #
+    #
+    #     except Exception as e:
+    #         author['location'] = ''
+    #         check_status(driver)
 
     return authors
 
@@ -174,9 +205,9 @@ def cataloge_page(url):
             if scroll_cnt < 10:
                 scroll_down()
                 scroll_cnt += 1
-                time.sleep(0.3)
+                time.sleep(0.5)
             else:
-                print('No more essays')
+                print(f'essay num: {len(essays)}')
                 break
 
     for essay in essays:
@@ -193,12 +224,23 @@ def main(urls: list[str]):
 
     with open('output.csv', 'w', newline='', encoding='utf-8') as csvfile:
         writer = csv.writer(csvfile)
+
+        translate_map = {'':''}
         for essay in essays:
             row = [essay['title'], essay['url']]
 
-            if essay.get('authors') is not None:
+            if essay.get('authors') is not None and len(essay.get('authors')) > 0:
+                for author in essay['authors']:
+                    if author['location'] != '' and translate_map.get(author['location']) is None:
+                        location = translate_doubao(author['location'])
+                        for missing_word in ['无法', '错误', '可能', '不够', '不全', '没有', '不够']:
+                            if missing_word in location:
+                                location = author['location']
+                                break
+                        translate_map[author['location']] = location
+
                 row.extend(
-                    [author['name'] + ', ' + (translate(author['location']) if author['location'] != '' else '') for
+                    [author['name'] + ', ' + translate_map.get(author['location']) for
                      author in essay['authors']]
                 )
             writer.writerow(row)
@@ -223,6 +265,6 @@ def filter():
 
 if __name__ == '__main__':
     main([
-        'https://webofscience.clarivate.cn/wos/woscc/summary/bde4e908-0758-4920-8715-0dffd69fbac6-010dfa675f/date-descending/2'
+        'https://webofscience.clarivate.cn/wos/alldb/summary/a97e53b6-5528-4952-95d3-66652110d0f4-010e27feb6/date-descending/1'
     ])
     # filter()
