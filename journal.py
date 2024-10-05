@@ -32,6 +32,10 @@ def main():
             journal_map[journal] = ''
             continue
 
+        if journal_map.get(journal) is not None:
+            print(f'{journal} is already mapped to {journal_map.get(journal)}')
+            continue
+
         completion = client.chat.completions.create(
             model="moonshot-v1-8k",
             messages=[

@@ -9,9 +9,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
-from translate import translate, translate_doubao
+from translate import translate_doubao
 
 global_driver = None
+
 
 # 发送请求
 def askurl(url):
@@ -69,17 +70,19 @@ def query_url(driver, essay_url):
             input('出现错误, 请确认是否解决')
             error_cnt += 1
 
-
-
     addresses = []
     for i in range(0, 10):
         address_button = driver.find_elements(By.CSS_SELECTOR,
                                               f'#FRAOrgTa-addressesShowHideBtn-{i} > span.mat-button-wrapper')
         if len(address_button) > 0:
             address_button = address_button[0]
-            address_button.click()
 
-            address = driver.find_elements(By.CSS_SELECTOR, f'#FRAOrgTa-RepOrgEnhancedName-addresses-{i}-0')
+            try:
+                address_button.click()
+                address = driver.find_elements(By.CSS_SELECTOR, f'#FRAOrgTa-RepOrgEnhancedName-addresses-{i}-0')
+            except Exception as e:
+                address = driver.find_elements(By.CSS_SELECTOR,
+                                               f'#address_{i + 1} > span.value.padding-right-5--reversible.section-label-data.colonMark')
         else:
             address = driver.find_elements(By.CSS_SELECTOR,
                                            f'#address_{i + 1} > span.value.padding-right-5--reversible.section-label-data.colonMark')
@@ -162,6 +165,13 @@ def check_status(driver):
     :param driver:
     :return:
     """
+    try:
+        cookie_button = driver.find_elements(By.CSS_SELECTOR, '#onetrust-accept-btn-handler')
+        if len(cookie_button) > 0:
+            cookie_button[0].click()
+    except Exception as e:
+        pass
+
     while True:
         try:
             WebDriverWait(driver, 10).until_not(
@@ -225,7 +235,7 @@ def main(urls: list[str]):
     with open('output.csv', 'w', newline='', encoding='utf-8') as csvfile:
         writer = csv.writer(csvfile)
 
-        translate_map = {'':''}
+        translate_map = {'': ''}
         for essay in essays:
             row = [essay['title'], essay['url']]
 
@@ -265,6 +275,6 @@ def filter():
 
 if __name__ == '__main__':
     main([
-        'https://webofscience.clarivate.cn/wos/alldb/summary/a97e53b6-5528-4952-95d3-66652110d0f4-010e27feb6/date-descending/1'
+        'https://webofscience.clarivate.cn/wos/alldb/summary/2e8d2b82-2561-406c-a387-6575ad52fafa-010e3b7acb/date-descending/1'
     ])
     # filter()

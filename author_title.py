@@ -1,4 +1,3 @@
-import os
 import time
 
 from openai import OpenAI
@@ -43,7 +42,8 @@ def main():
 
             res = completion.choices[0].message.content.strip('。')
 
-            if '无法查询' in res or '没有' in res or '未找到' in res or '无法' in res or '查询' in res or 'is not' in res or '不适用' in res or '无' in res:
+            if '无法查询' in res or '没有' in res or '未找到' in res or '无法' in res or '查询' in res or 'is not' in res or '不适用' in res or '无' in res \
+                    or 's an ' in res or 's a ' in res:
                 tmp_result.append(cell)
                 print(cell)
             else:
