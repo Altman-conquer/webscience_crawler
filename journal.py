@@ -7,9 +7,37 @@ from openai import OpenAI
 from settings import KIMI_API_KEY
 
 
+def query_journal_zone(journal: str):
+    client = OpenAI(
+        api_key=KIMI_API_KEY,
+        base_url="https://api.moonshot.cn/v1",
+    )
+
+    completion = client.chat.completions.create(
+        model="moonshot-v1-8k",
+        messages=[
+            {"role": "system",
+             "content": "你是 Kimi，由 Moonshot AI 提供的人工智能助手，你更擅长中文和英文的对话。你会为用户提供安全，有帮助，准确的回答。回答要简洁，不要有多余文字"},
+            {"role": "user", "content": f"{journal}是JCR几区的文章，只需要回答是几区，不需要其他文字"}
+        ],
+        temperature=0.3,
+    )
+
+    zone = completion.choices[0].message.content.strip('。').strip('Q').strip('区').strip('JCR')
+    zone = re.sub(r'将.*为', '', zone)
+    zone = zone.replace('"', '')
+    zone = zone.replace('1', '一').replace('2', '二').replace('3', '三').replace('4', '四')
+
+    if zone == '' or '没有' in zone:
+        return '未分区'
+    else:
+        return f'JCR {zone}区'
+
+
 def main():
     with open('journal.txt', 'r', encoding='utf-8') as file:
         data = file.read().splitlines()
+    data = [line.strip('" ') for line in data]
 
     journal_set = set(data)
 
@@ -113,7 +141,29 @@ def format_csv():
         writer.writerows(result)
 
 
+def get_journal_zone_kimi(journal: str):
+    with open('journal_map.csv', 'r', encoding='utf-8') as file:
+        tmp_str = file.read()
+        journal_map = {}
+        for line in tmp_str.splitlines():
+            tmp_arr = line.split(',')
+            journal, zone = ','.join(tmp_arr[:-1]), tmp_arr[-1]
+            journal_map[journal] = zone
+
+    buffered = journal_map.get('journal')
+    if buffered is None or buffered == '':
+        journal_map[journal] = query_journal_zone(journal)
+        with open('journal_map.csv', 'a', newline='', encoding='utf-8') as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerows([[journal, journal_map[journal]]])
+        time.sleep(25)
+        return journal_map[journal]
+    else:
+        return journal_map.get(journal, '')
+
+
 if __name__ == '__main__':
+    # print(query_journal_zone('2023 IEEE/CVF INTERNATIONAL CONFERENCE ON COMPUTER VISION (ICCV 2023)'))
     # temp()
     main()
     format_csv()

@@ -9,6 +9,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
+from journal import get_journal_zone_kimi
 from translate import translate_doubao
 
 global_driver = None
@@ -45,6 +46,31 @@ def askurl(url):
 
     # 返回数据
     return driver
+
+
+def get_journal_zone(driver, essay_name: str = ''):
+    try:
+        def scroll_to_top():
+            driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.HOME)
+            time.sleep(0.5)
+
+        time.sleep(0.5)
+        scroll_to_top()
+        WebDriverWait(driver, 3).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR,
+                                            '#snMainArticle > div:nth-child(6) > span > app-jcr-sidenav > mat-sidenav-container > mat-sidenav-content'))
+        )
+        driver.find_element(By.CSS_SELECTOR,
+                            '#snMainArticle > div:nth-child(6) > span > app-jcr-sidenav > mat-sidenav-container > mat-sidenav-content').click()
+        time.sleep(0.5)
+        driver.find_element(By.CSS_SELECTOR, 'div.mat-menu-content > a:first-of-type').click()
+        time.sleep(0.5)
+        zone: str = driver.find_element(By.CSS_SELECTOR, '#Sidenav-0-JCR-quartile_0').text
+        zone = zone.removeprefix('Q')
+        zone = zone.replace('1', '一区').replace('2', '二区').replace('3', '三区').replace('4', '四区')
+    except Exception as e:
+        return get_journal_zone_kimi(essay_name)
+    return 'JCR ' + zone
 
 
 def query_url(driver, essay_url):
@@ -129,34 +155,22 @@ def query_url(driver, essay_url):
                 'location': '' if author_loc == -1 else addresses[author_loc - 1]
             })
 
-    # for author in authors:
-    #     driver.get(author['url'])
-    #
-    #     # Wait for the element to be present with a timeout of 10 seconds
-    #     try:
-    #         # WebDriverWait(driver, 10).until(
-    #         #     EC.presence_of_element_located((By.CSS_SELECTOR,
-    #         #                                     'body > app-wos > main > div > div > div.holder.new-wos-style > div > div > div.held > app-input-route > app-author-page > div > div > div.author-details-section > app-author-record-header > div > div > div > mat-card-title > h1'))
-    #         # )
-    #         # author_name = driver.find_elements(By.CSS_SELECTOR,
-    #         #                                    'body > app-wos > main > div > div > div.holder.new-wos-style > div > div > div.held > app-input-route > app-author-page > div > div > div.author-details-section > app-author-record-header > div > div > div > mat-card-title > h1')
-    #         # if len(author_name) != 0 and author_name[0].text != '':
-    #         #     author['name'] = author_name[0].text
-    #         WebDriverWait(driver, 10).until(
-    #             EC.presence_of_element_located((By.CSS_SELECTOR,
-    #                                             'body > app-wos > main > div > div > div.holder.new-wos-style > div > div > div.held > app-input-route > app-author-page > div > div > div.author-details-section > app-author-record-header > div > div > div > mat-card-content > div.inline-container > span > span:nth-child(1)'))
-    #         )
-    #         author_loc = driver.find_elements(By.CSS_SELECTOR,
-    #                                           'body > app-wos > main > div > div > div.holder.new-wos-style > div > div > div.held > app-input-route > app-author-page > div > div > div.author-details-section > app-author-record-header > div > div > div > mat-card-content > div.inline-container > span > span:nth-child(1)')
-    #         if len(author_loc) != 0:
-    #             author['location'] = author_loc[0].text
-    #
-    #
-    #     except Exception as e:
-    #         author['location'] = ''
-    #         check_status(driver)
+    journal = driver.find_elements(By.CSS_SELECTOR,
+                                   '#snMainArticle > div.cdx-two-column-grid-container.ng-star-inserted > span > app-jcr-sidenav > mat-sidenav-container > mat-sidenav-content > span > a > span')
+    if len(journal) == 0:
+        journal = driver.find_elements(By.CSS_SELECTOR,
+                                       '#snMainArticle > div.cdx-two-column-grid-container.ng-star-inserted > span > app-jcr-sidenav > mat-sidenav-container > mat-sidenav-content > span > span')
 
-    return authors
+    if len(journal) > 0:
+        journal = journal[0].text
+
+    year = driver.find_elements(By.CSS_SELECTOR, '#FullRTa-indexedDate')
+    if len(year) > 0:
+        year = year[0].text.split('-')[0]
+
+    zone = get_journal_zone(driver, journal)
+
+    return authors, journal, year, zone
 
 
 def check_status(driver):
@@ -221,8 +235,8 @@ def cataloge_page(url):
                 break
 
     for essay in essays:
-        essay['authors'] = query_url(driver, essay['url'])
-        print(essay['title'], essay['authors'])
+        essay['authors'], essay['journal'], essay['year'], essay['zone'] = query_url(driver, essay['url'])
+        print(essay['title'], essay['journal'], essay['zone'], essay['year'], essay['authors'])
 
     return essays
 
@@ -238,6 +252,13 @@ def main(urls: list[str]):
         translate_map = {'': ''}
         for essay in essays:
             row = [essay['title'], essay['url']]
+
+            if essay.get('journal') is not None:
+                row.extend([essay['journal']])
+            if essay.get('year') is not None:
+                row.extend([essay['year']])
+            if essay.get('zone') is not None:
+                row.extend([essay['zone']])
 
             if essay.get('authors') is not None and len(essay.get('authors')) > 0:
                 for author in essay['authors']:
@@ -273,8 +294,14 @@ def filter():
         csvfile.writelines(result)
 
 
+def test():
+    driver = askurl('https://webofscience.clarivate.cn/wos/alldb/full-record/WOS:001292695600001')
+    get_journal_zone(driver)
+
+
 if __name__ == '__main__':
+    # test()
     main([
-        'https://webofscience.clarivate.cn/wos/alldb/summary/2e8d2b82-2561-406c-a387-6575ad52fafa-010e3b7acb/date-descending/1'
+        'https://webofscience.clarivate.cn/wos/alldb/summary/4b474307-b0b6-4a3f-b5da-0a9f0434f082-010f873d22/date-descending/1'
     ])
     # filter()
