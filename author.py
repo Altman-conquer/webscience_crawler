@@ -96,6 +96,11 @@ def query_url(driver, essay_url):
             input('出现错误, 请确认是否解决')
             error_cnt += 1
 
+    more_address_button = driver.find_elements(By.CSS_SELECTOR, '#FRACTa-authorAddressView')
+    if len(more_address_button) > 0:
+        more_address_button = more_address_button[0]
+        more_address_button.click()
+
     addresses = []
     for i in range(0, 10):
         address_button = driver.find_elements(By.CSS_SELECTOR,
@@ -147,12 +152,17 @@ def query_url(driver, essay_url):
         else:
             author_loc = -1
 
+        try:
+            location = '' if author_loc == -1 else addresses[author_loc - 1]
+        except Exception as e:
+            location = ''
+
         authors.append(
             {
                 'name': author_name,
                 'url': driver.find_element(By.CSS_SELECTOR, f'#SumAuthTa-DisplayName-author-en-{index}').get_attribute(
                     'href'),
-                'location': '' if author_loc == -1 else addresses[author_loc - 1]
+                'location': location
             })
 
     journal = driver.find_elements(By.CSS_SELECTOR,
@@ -302,6 +312,6 @@ def test():
 if __name__ == '__main__':
     # test()
     main([
-        'https://webofscience.clarivate.cn/wos/alldb/summary/4b474307-b0b6-4a3f-b5da-0a9f0434f082-010f873d22/date-descending/1'
+        'https://webofscience.clarivate.cn/wos/alldb/summary/4cd83122-29df-4a0e-a629-e3811b71eb86-010fa3c997/date-descending/1'
     ])
     # filter()

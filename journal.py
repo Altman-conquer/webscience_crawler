@@ -150,7 +150,7 @@ def get_journal_zone_kimi(journal: str):
             journal, zone = ','.join(tmp_arr[:-1]), tmp_arr[-1]
             journal_map[journal] = zone
 
-    buffered = journal_map.get('journal')
+    buffered = journal_map.get(journal)
     if buffered is None or buffered == '':
         print(f'Querying {journal}...')
         journal_map[journal] = query_journal_zone(journal)
@@ -165,6 +165,7 @@ def get_journal_zone_kimi(journal: str):
 
 if __name__ == '__main__':
     # print(query_journal_zone('2023 IEEE/CVF INTERNATIONAL CONFERENCE ON COMPUTER VISION (ICCV 2023)'))
+    print(get_journal_zone_kimi('2023 IEEE/CVF INTERNATIONAL CONFERENCE ON COMPUTER VISION (ICCV 2023)'))
     # temp()
-    main()
-    format_csv()
+    # main()
+    # format_csv()
