@@ -152,6 +152,7 @@ def get_journal_zone_kimi(journal: str):
 
     buffered = journal_map.get('journal')
     if buffered is None or buffered == '':
+        print(f'Querying {journal}...')
         journal_map[journal] = query_journal_zone(journal)
         with open('journal_map.csv', 'a', newline='', encoding='utf-8') as csvfile:
             writer = csv.writer(csvfile)
