@@ -462,8 +462,20 @@ def get_file_name(url: list[str]):
     if len(year) > 0:
         year = year[0].text.split('-')[0]
 
-    res = f'{year}-{journal}刊物-xxx次引用-{essay_name}'
+    files = os.listdir('input')
+    df = []
+
+    for file in files:
+        if essay_name in file:
+            df = pd.read_excel(f'input/{file}')
+            break
+            # with open(f'input/{file}', 'r', encoding='utf-8') as file:
+            #     data = file.read().splitlines()
+
+
+    res = f'{year}-{journal}刊物-{len(df) - 1}次引用-{essay_name}'
     print(res)
+
     return res
 
 

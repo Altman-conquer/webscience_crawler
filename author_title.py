@@ -1,5 +1,6 @@
 import csv
 import os
+import time
 from os import remove
 
 import pandas as pd
@@ -21,7 +22,7 @@ def query_title_kimi(cell: str):
             {"role": "system",
              "content": "你是 Kimi，由 Moonshot AI 提供的人工智能助手，你更擅长中文和英文的对话。你会为用户提供安全，有帮助，准确的回答。回答要简洁，不要有多余文字"},
             {"role": "user",
-             "content": f"我会给你提供人名及其工作地点，查询这个人的头衔，例如是否为院士，IEEE Fellow等，不要回答其他内容，回答尽量简短，只包含这个人的头衔，例如回答：”APS Fellow“\n 现在请查询下面这个人的头衔：{cell}"}
+             "content": f"我会给你提供人名及其工作地点，查询这个人的头衔，例如是否为中国科学院、中国工程院，以及欧洲科学院、美国工程院等国外院士，某个国家或教育部重点实验室主任，IEEE Fellow/ACM Fellow/IET/AAIA Fellow/NAI Fellow/等，不要回答其他内容，回答尽量简短，只包含这个人的头衔，例如回答：”APS Fellow, IEEE Fellow“\n 现在请查询下面这个人的头衔： \n {cell}"}
         ],
         temperature=0.3,
     )
@@ -81,8 +82,8 @@ def main(input_file_path: str = None, output_file_path: str = None):
                 tmp_result.append(cell)
                 continue
 
-            # res = query_title_kimi(cell)
-            res = query_title_doubao(cell)
+            res = query_title_kimi(cell)
+            # res = query_title_doubao(cell)
 
             if '无法查询' in res or '没有' in res or '未找到' in res or '无法' in res or '查询' in res or 'is not' in res or '不适用' in res or '无' in res \
                     or 's an ' in res or 's a ' in res:
@@ -100,7 +101,7 @@ def main(input_file_path: str = None, output_file_path: str = None):
                 tmp_result.append(f'{cell}, {res}')
                 print(cell, res)
 
-            # time.sleep(30)
+            time.sleep(30)
 
         result.append(tmp_result)
         # break
