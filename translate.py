@@ -1,5 +1,8 @@
 import json
+import string
+import time
 
+from openai import OpenAI
 from tencentcloud.common import credential
 from tencentcloud.common.exception.tencent_cloud_sdk_exception import TencentCloudSDKException
 from tencentcloud.common.profile.client_profile import ClientProfile
@@ -7,7 +10,7 @@ from tencentcloud.common.profile.http_profile import HttpProfile
 from tencentcloud.tmt.v20180321 import tmt_client, models
 from volcenginesdkarkruntime import Ark
 
-from settings import TENCENT_API_KEY, TENCENT_API_SECRET, AZURE_TRANSLATE_KEY, DOUBAO_API_KEY
+from settings import TENCENT_API_KEY, TENCENT_API_SECRET, AZURE_TRANSLATE_KEY, DOUBAO_API_KEY, KIMI_API_KEY
 
 
 def translate(text):
@@ -90,28 +93,78 @@ def translate_azure(text):
     return response[0].get('translations')[0].get('text')
 
 
-def translate_doubao(text):
+translate_map = {}
+
+
+def translate_doubao(cell):
     client = Ark(
         base_url="https://ark.cn-beijing.volces.com/api/v3",
         api_key=DOUBAO_API_KEY,
     )
 
     completion = client.chat.completions.create(
-        model="ep-20240807115051-pzgm4",
+        model="ep-20241012233214-5bm9g",
         messages=[
             {"role": "system", "content": "你是豆包，是由字节跳动开发的 AI 人工智能助手"},
             {"role": "user",
-             "content": f"将后面的内容翻译成中文，不要回答其他多余文字和符号，只需要返回一个结果\n\n{text}"},
+             "content": f"我会给你提供论文作者的英文姓名还有所在学校的英文名称，请根据学校的英文名称判断作者是国内还是国外的，针对国内的作者，请将其翻译成中文名和中文校名，为了保证中文姓名翻译的准确，请搜索该作者对应的信息来保证正确性, 针对国外的作者，则按照原文进行返回，不要回答其他多余文字和符号，只需要返回一个结果，例如对于“Zhang Jing, University of Sydney”，由于University of Sydney在国外，所以应该原样返回“Zhang Jing, University of Sydney”\n\n{cell}"},
         ],
     )
 
-    target_text = completion.choices[0].message.content
-    print(f'translate {text} to {target_text}')
-    return target_text
+    res = completion.choices[0].message.content.strip('。')
+    res = res.replace('，', ',').replace('。', '.').replace('；', ';').replace('：', ':')
+    for c in string.ascii_letters:
+        if c in res:
+            translate_map[cell] = res
+            print(f'translate {cell} to {cell}')
+            return cell
+
+    translate_map[cell] = res
+
+    print(f'translate {cell} to {res}')
+    return res
+
+
+def translate_kimi(cell: str):
+    if cell in translate_map:
+        return translate_map[cell]
+
+    client = OpenAI(
+        api_key=KIMI_API_KEY,
+        base_url="https://api.moonshot.cn/v1",
+    )
+
+    completion = client.chat.completions.create(
+        model="moonshot-v1-8k",
+        messages=[
+            {"role": "system",
+             "content": "你是 Kimi，由 Moonshot AI 提供的人工智能助手，你更擅长中文和英文的对话。你会为用户提供安全，有帮助，准确的回答。回答要简洁，不要有多余文字"},
+            {"role": "user",
+             "content": f"我会给你提供论文作者的英文姓名还有所在学校的英文名称，针对国内的作者，请将其翻译成中文名，中文校名，为了保证中文姓名翻译的准确，请搜索该作者对应的信息来保证正确性, 针对国外的作者，则按照原文进行返回，不要回答其他多余文字和符号，只需要返回一个结果\n\n{cell}"}
+        ],
+        temperature=0.3,
+    )
+
+    time.sleep(25)
+    res = completion.choices[0].message.content.strip('。')
+    res = res.replace('，', ',').replace('。', '.').replace('；', ';').replace('：', ':')
+    for c in string.ascii_letters:
+        if c in res:
+            translate_map[cell] = res
+            return cell
+
+    translate_map[cell] = res
+    return res
 
 
 if __name__ == '__main__':
-    text = 'Beihang University'
-    print(translate(text))
-    print(translate_azure(text))
-    print(translate_doubao(text))
+    for text in ['Benayad, Mohamed, Hassan II Univ, Fac Sci Ain Chock, Geosci Lab, Casablanca, Morocco',
+                 'Zhang Jing, University of Sydney',
+                 'Xu Xuemiao, South China University of Technology']:
+    # text = 'Benayad, Mohamed, Hassan II Univ, Fac Sci Ain Chock, Geosci Lab, Casablanca, Morocco'
+    # text = 'Zhang Jing, University of Sydney'
+    # text = 'Xu Xuemiao, South China University of Technology'
+    # print(translate(text))
+    # print(translate_azure(text))
+        print(translate_doubao(text))
+        # print(translate_kimi(text))

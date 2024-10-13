@@ -1,6 +1,8 @@
 # selenium库
 # 处理时间
 import csv
+import os.path
+import re
 import time
 
 from selenium import webdriver
@@ -10,7 +12,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 from journal import get_journal_zone_kimi
-from translate import translate_doubao
+from translate import translate_kimi, translate_doubao
 
 global_driver = None
 
@@ -19,7 +21,7 @@ global_driver = None
 def askurl(url):
     global global_driver
     if global_driver is not None:
-        driver = webdriver.Edge()
+        driver = global_driver
     else:
         driver = webdriver.Edge()
         global_driver = driver
@@ -31,6 +33,8 @@ def askurl(url):
 
     # 开启模拟浏览器
     driver.get(url)
+
+    driver.maximize_window()
 
     # 关闭所有不需要的窗口
     # now = driver.current_window_handle					#获取当前的主窗口
@@ -85,7 +89,7 @@ def query_url(driver, essay_url):
         try:
             if error_cnt >= 2:
                 print('错误多次出现，强制返回')
-                return None
+                return None, None, None, None
 
             WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, '#SumAuthTa-DisplayName-author-en-0'))
@@ -93,6 +97,7 @@ def query_url(driver, essay_url):
             break
         except Exception as e:
             print(e)
+            return None, None, None, None
             input('出现错误, 请确认是否解决')
             error_cnt += 1
 
@@ -196,6 +201,13 @@ def check_status(driver):
     except Exception as e:
         pass
 
+    try:
+        tutorial_button = driver.find_elements(By.CSS_SELECTOR, '_pendo-close-guide')
+        if len(tutorial_button) > 0:
+            tutorial_button[0].click()
+    except Exception as e:
+        pass
+
     while True:
         try:
             WebDriverWait(driver, 10).until_not(
@@ -228,6 +240,8 @@ def cataloge_page(url):
     scroll_cnt = 0
     i = 1
     while i <= 50:
+        check_status(driver)
+
         essay = driver.find_elements(By.CSS_SELECTOR,
                                      f'body > app-wos > main > div > div > div.holder > div > div > div.held > app-input-route > app-base-summary-component > div > div.results.ng-star-inserted > app-records-list > app-record:nth-child({i}) > div > div > div.data-section > div:nth-child(2) > app-summary-title > h3 > a')
         if len(essay) != 0:
@@ -251,54 +265,114 @@ def cataloge_page(url):
     return essays
 
 
+def get_cited_essay_name(url: str):
+    driver = askurl(url)
+    try:
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, '#GenericFD-article-metadata-parent > span > span'))
+        )
+    except Exception as e:
+        return url
+    essay_name = driver.find_element(By.CSS_SELECTOR, '#GenericFD-article-metadata-parent > span > span').text
+    return sanitize_filename(essay_name)
+
+
+def sanitize_filename(filename):
+    # 定义不允许的字符
+    invalid_chars = r'[<>:"/\\|?*]'
+    # 使用下划线替换不允许的字符
+    sanitized_filename = re.sub(invalid_chars, '_', filename)
+    return sanitized_filename
+
+
 def main(urls: list[str]):
-    essays = []
-    for url in urls:
-        essays.extend(cataloge_page(url))
+    print(f'start process {urls}')
 
-    with open('output.csv', 'w', newline='', encoding='utf-8') as csvfile:
-        writer = csv.writer(csvfile)
+    try:
+        essays = []
+        for url in urls:
+            essays.extend(cataloge_page(url))
 
-        translate_map = {'': ''}
-        for essay in essays:
-            row = [essay['title'], essay['url']]
+        essay_name = get_cited_essay_name(urls[0])
 
-            if essay.get('journal') is not None:
-                row.extend([essay['journal']])
-            if essay.get('year') is not None:
-                row.extend([essay['year']])
-            if essay.get('zone') is not None:
-                row.extend([essay['zone']])
+        # make sure output directory exist
+        if not os.path.exists('output/'):
+            os.mkdir('output')
 
-            if essay.get('authors') is not None and len(essay.get('authors')) > 0:
-                for author in essay['authors']:
-                    if author['location'] != '' and translate_map.get(author['location']) is None:
-                        location = translate_doubao(author['location'])
-                        for missing_word in ['无法', '错误', '可能', '不够', '不全', '没有', '不够']:
-                            if missing_word in location:
-                                location = author['location']
-                                break
-                        translate_map[author['location']] = location
+        with open(f'output/{essay_name}.csv', 'w', newline='', encoding='utf-8') as csvfile:
+            writer = csv.writer(csvfile)
 
-                row.extend(
-                    [author['name'] + ', ' + translate_map.get(author['location']) for
-                     author in essay['authors']]
-                )
-            writer.writerow(row)
+            translate_map = {'': ''}
+            for essay in essays:
+                row = [essay['title'], essay['url']]
+
+                if essay.get('journal') is not None:
+                    row.extend([essay['journal']])
+                if essay.get('year') is not None:
+                    row.extend([essay['year']])
+                if essay.get('zone') is not None:
+                    row.extend([essay['zone']])
+
+                if essay.get('authors') is not None and len(essay.get('authors')) > 0:
+                    # for author in essay['authors']:
+                    #     if author['location'] != '' and translate_map.get(author['location']) is None:
+                    #         # location = translate_kimi(f'{author["name"]}, {author["location"]}')
+                    #         location = translate_doubao(f'{author["name"]}, {author["location"]}')
+                    #         for missing_word in ['无法', '错误', '可能', '不够', '不全', '没有', '不够']:
+                    #             if missing_word in location:
+                    #                 location = f'{author["name"]}, {author["location"]}'
+                    #                 break
+                    #         translate_map[author['location']] = location
+
+                    # row.extend(
+                    #     [author['name'] + ', ' + translate_map.get(author['location']) for
+                    #      author in essay['authors']]
+                    # )
+
+                    # row.extend(
+                    #     [translate_kimi(f'{author["name"]}, {author["location"]}') for
+                    #      author in essay['authors']]
+                    # )
+
+                    row.extend(
+                        [translate_doubao(f'{author["name"]}, {author["location"]}') for
+                         author in essay['authors']]
+                    )
+                writer.writerow(row)
+    except Exception as e:
+        print(f'error when processing {urls}, error: {e}')
 
 
 def filter():
     with open('output_filter.txt', 'r', encoding='utf-8') as file:
-        filter_journal = set(file.read().splitlines())
+        text = file.read()
+        text = text.replace('\n\n', '\ntest\n')
+        filter_journal = text.splitlines()
 
     with open('output.csv', 'r', encoding='utf-8') as file:
         data = file.read().splitlines()
 
     result = []
-    for i in data:
-        if i.split(',')[0] not in filter_journal:
+
+    j = 0
+    for i in range(0, len(data)):
+        if filter_journal[j] == 'test':
+            result.append('\n')
+            j += 1
             continue
-        result.append(i + '\n')
+        if data[i].split(',')[0] not in set(filter_journal):
+            continue
+        result.append(data[i] + '\n')
+        j += 1
+
+        if j > len(filter_journal) - 1:
+            break
+    # for i in data:
+    #     if i == ' ':
+    #         result.append('\n')
+    #     if i.split(',')[0] not in filter_journal:
+    #         continue
+    #     result.append(i + '\n')
 
     with open('output_filtered.csv', 'w', newline='', encoding='utf-8') as csvfile:
         csvfile.writelines(result)
@@ -311,7 +385,27 @@ def test():
 
 if __name__ == '__main__':
     # test()
-    main([
-        'https://webofscience.clarivate.cn/wos/alldb/summary/4cd83122-29df-4a0e-a629-e3811b71eb86-010fa3c997/date-descending/1'
-    ])
+    # main([
+    #       'https://webofscience.clarivate.cn/wos/alldb/summary/bcf63107-06d4-4c5d-87b9-73962fb158e4-0110e77550/date-descending/1',
+    #       'https://webofscience.clarivate.cn/wos/alldb/summary/bcf63107-06d4-4c5d-87b9-73962fb158e4-0110e77550/date-descending/2',
+    #       'https://webofscience.clarivate.cn/wos/alldb/summary/bcf63107-06d4-4c5d-87b9-73962fb158e4-0110e77550/date-descending/3',
+    #       ])
+    # main(['https://webofscience.clarivate.cn/wos/alldb/summary/5cbdfa7b-735e-4f41-9ee2-49c8d8afc41f-0110e7c723/date-descending/1',
+    #       'https://webofscience.clarivate.cn/wos/alldb/summary/5cbdfa7b-735e-4f41-9ee2-49c8d8afc41f-0110e7c723/date-descending/2'])
+    # main(['https://webofscience.clarivate.cn/wos/alldb/summary/6807229e-9aca-4f2b-9bbd-95e66bcefe59-0110e7cf50/date-descending/1'])
+    # main(['https://webofscience.clarivate.cn/wos/alldb/summary/c2d62e63-b8c4-4cd0-869e-2087300e5c4b-0110e7d885/date-descending/1'])
+    # main(['https://webofscience.clarivate.cn/wos/alldb/summary/4c7678b8-4763-43c4-aa1a-3989b43bbd28-0110e7df99/date-descending/1'])
+    # main(['https://webofscience.clarivate.cn/wos/alldb/summary/1623c323-e38c-482c-99fe-686f69b8f345-0110e7e488/date-descending/1'])
+    # main(['https://webofscience.clarivate.cn/wos/alldb/summary/f3033b9a-aee7-45a1-9797-d83fa5dcb3c9-0110e80818/date-descending/1'])
+    # main(['https://webofscience.clarivate.cn/wos/alldb/summary/6c24a003-6005-4e66-afcd-6540c56b1b8e-0110fcb796/date-descending/1'])
+    # main(['https://webofscience.clarivate.cn/wos/alldb/summary/a43d9e6d-f8f9-4855-80e5-396203455349-0110e81494/date-descending/1'])
+    # main(['https://webofscience.clarivate.cn/wos/alldb/summary/c13c63aa-af10-4d73-96cc-41a42e464c35-0110e81c12/date-descending/1'])
+    # main(['https://webofscience.clarivate.cn/wos/alldb/summary/a94e0c73-b588-4923-8e63-6f84386e15af-0110e81f3b/date-descending/1'])
+    # main([
+    #     'https://webofscience.clarivate.cn/wos/alldb/summary/4917ca88-b582-495c-8e00-912a1780c0a5-0110e823d0/date-descending/1'])
+    # main([
+    #     'https://webofscience.clarivate.cn/wos/alldb/summary/e054d476-625f-4635-ac20-ca55397df531-0110e82a1f/date-descending/1'])
+
+    main(['https://webofscience.clarivate.cn/wos/alldb/summary/6c24a003-6005-4e66-afcd-6540c56b1b8e-0110fcb796/date-descending/1'])
+
     # filter()

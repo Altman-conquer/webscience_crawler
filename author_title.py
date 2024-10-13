@@ -74,12 +74,12 @@ def main():
                 tmp_result.append(cell)
                 print(cell)
             else:
-                res = res.strip(f'{cell}，头衔：')
-                res = res.strip(f'{cell}的头衔是：')
-                res = res.strip(f'{cell}的头衔是')
-                res = res.strip(f'{cell}：')
-                res = res.strip(f'为：')
-                res = res.strip(f'{str(cell).split(",")[0]} 是 ')
+                res = res.removeprefix(f'{cell}，头衔：')
+                res = res.removeprefix(f'{cell}的头衔是：')
+                res = res.removeprefix(f'{cell}的头衔是')
+                res = res.removeprefix(f'{cell}：')
+                res = res.removeprefix(f'为：')
+                res = res.removeprefix(f'{str(cell).split(",")[0]} 是 ')
 
                 tmp_result.append(f'{cell}, {res}')
                 print(cell, res)
