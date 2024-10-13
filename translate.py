@@ -119,6 +119,11 @@ def translate_doubao(cell):
             print(f'translate {cell} to {cell}')
             return cell
 
+    if '判断' in res:
+        translate_map[cell] = res
+        print(f'translate {cell} to {cell}')
+        return cell
+
     translate_map[cell] = res
 
     print(f'translate {cell} to {res}')
