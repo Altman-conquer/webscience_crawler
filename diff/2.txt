@@ -1,0 +1,135 @@
+SOENet: a multi-resolution network for sheep extraction from high-resolution remote sensing images
+CG-CFPANet: a multi-task network for built-up area extraction from SDGSAT-1 and Sentinel-2 remote sensing images
+Two-stage re-parameterization and sample disentanglement network for surveillance vehicle detection
+Accurate Representation Modeling and Interindividual Constraint Learning for Roadside Three-Dimensional Object Detection
+An efficient model for small object detection in the maritime environment
+A Step-Wise Domain Adaptation Detection Transformer for Object Detection under Poor Visibility Conditions
+Enhancing vehicle detection in intelligent transportation systems via autonomous UAV platform and YOLOv8 integration
+Smart traffic management of vehicles using faster R-CNN based deep learning method
+NRPerson: A Non-Registered Multi-Modal Benchmark for Tiny Person Detection and Localization
+A lightweight vehicle detection network fusing feature pyramid and channel attention
+Detection Technique Tailored for Small Targets on Water Surfaces in Unmanned Vessel Scenarios
+AlexDarkNet: Hybrid CNN architecture for real-time Traffic monitoring with unprecedented reliability
+Super-Resolution GAN and Global Aware Object Detection System for Vehicle Detection in Complex Traffic Environments
+INTEGRATION OF DEEP LEARNING MODELS FOR VEHICLE COUNTING: TOWARDS OPTIMIZED PLANNING OF URBAN CHARGING INFRASTRUCTURES
+Oriented Ship Detection Based on Soft Thresholding and Context Information in SAR Images of Complex Scenes
+Multi-Pedestrian Tracking Based on KC-YOLO Detection and Identity Validity Discrimination Module
+Towards Large-Scale Small Object Detection: Survey and Benchmarks
+GSDerainNet: A Deep Network Architecture Based on a Gaussian Shannon Filter for Single Image Deraining
+Progressive dilation dense residual fusion network for single-image deraining
+Vehicle detection in diverse traffic using an ensemble convolutional neural backbone via feature concatenation
+Select Informative Samples for Night-Time Vehicle Detection Benchmark in Urban Scenes
+Traffic Noise Assessment Using Intelligent Acoustic Sensors (Traffic Ear) and Vehicle Telematics Data
+Deep Learning Techniques for Vehicle Detection and Classification from Images/Videos: A Survey
+Adaptive single image defogging based on sky segmentation
+LF-YOLO: A Lighter and Faster YOLO for Weld Defect Detection of X-Ray Image
+Latency-Aware Task Scheduling in Software-Defined Edge and Cloud Computing With Erasure-Coded Storage Systems
+An improved anchor-free method for traffic scene object detection
+Real-time vehicle target detection in inclement weather conditions based on YOLOv4
+A Fast and Accurate Real-Time Vehicle Detection Method Using Deep Learning for Unconstrained Environments
+ResiDualGAN: Resize-Residual DualGAN for Cross-Domain Remote Sensing Images Semantic Segmentation
+Deep Texture-Aware Features for Camouflaged Object Detection
+Representative Feature Alignment for Adaptive Object Detection
+PerspectiveNet: An Object Detection Method With Adaptive Perspective Box Network Based on Density-Aware
+A vehicle detection method based on disparity segmentation
+Real-time dense traffic detection using lightweight backbone and improved path aggregation feature pyramid network
+Knowledge Fusion Distillation: Improving Distillation with Multi-scale Attention Mechanisms
+Study on Vehicle Recognition Algorithm Based on Convolutional Neural Network
+A CNN-Transformer Hybrid Model Based on CSWin Transformer for UAV Image Object Detection
+PVDet: Towards pedestrian and vehicle detection on gigapixel-level images
+Scale Invariant low frame rate tracking
+2D Winograd CNN Chip for COVID-19 and Pneumonia Detection
+Achieving Adaptive Visual Multi-Object Tracking with Unscented Kalman Filter
+Mixed Stage Partial Network and Background Data Augmentation for Surveillance Object Detection
+A Robust Framework for Object Detection in a Traffic Surveillance System
+Swin transformer based vehicle detection in undisciplined traffic environment
+Binary residual feature pyramid network: An improved feature fusion module based on double-channel residual pyramid structure for autonomous detection algorithm
+Industrial gearbox fault diagnosis based on multi-scale convolutional neural networks and thermal imaging
+Semi-MoreGAN: Semi-supervised Generative Adversarial Network for Mixture of Rain Removal
+A Two-Branch Pedestrian Detection Method for Small and Blurred Target
+Making You Only Look Once Faster: Toward Real-Time Intelligent Transportation Detection
+An Automated Learning Framework With Limited and Cross-Domain Data for Traffic Equipment Detection From Surveillance Videos
+Vision-Based Autonomous Vehicle Systems Based on Deep Learning: A Systematic Literature Review
+Vehicle fusion detection in visible and infrared thermal images via spare network and dynamic weight coefficient-based Dempster-Shafer evidence theory
+Orientation aware weapons detection in visual data: a benchmark dataset
+Last Decade in Vehicle Detection and Classification: A Comprehensive Survey
+A Two-Stage Hybrid Extreme Learning Model for Short-Term Traffic Flow Forecasting
+Traffic state prediction using conditionally Gaussian observed Markov fuzzy switching model
+SA-YOLOv3: An Efficient and Accurate Object Detector Using Self-Attention Mechanism for Autonomous Driving
+Efficient multi-model integration neural network framework for nighttime vehicle detection
+Covariance Attention for Semantic Segmentation
+Recent Advances in Vision-Based On-Road Behaviors Understanding: A Critical Survey
+A Traffic Event Detection Method Based on Random Forest and Permutation Importance
+Slicing-Based Reliable Resource Orchestration for Secure Software-Defined Edge-Cloud Computing Systems
+Real-Time Monocular Joint Perception Network for Autonomous Driving
+Dense Traffic Detection at Highway-Railroad Grade Crossings
+Traffic sign detection based on improved faster R-CNN for autonomous driving
+A complementary and precise vehicle detection approach in RGB-T images via semi-supervised transfer learning and decision-level fusion
+A Robust Vehicle Detection Model Based on Attention and Multi-scale Feature Fusion
+Small object detection combining attention mechanism and a novel FPN
+A lightweight deep neural network with higher accuracy
+Traffic incident detection based on a global trajectory spatiotemporal map
+A Real-Time Object Detector for Autonomous Vehicles Based on YOLOv4
+Vehicle Detection and Disparity Estimation Using Blended Stereo Images
+Attention guided contextual feature fusion network for salient object detection
+Deep Learning for Unmanned Aerial Vehicle-Based Object Detection and Tracking: A Survey
+Pedestrian and Vehicle Detection in Autonomous Vehicle Perception Systems-A Review
+Channel spatial attention based single-shot object detector for autonomous vehicles
+Application of Convolution Neural Network (CNN) Model Combined with Pyramid Algorithm in Aerobics Action Recognition
+Vehicle Detection in Remote Sensing Image Based on Machine Vision
+Vehicle Detection in Very-High-Resolution Remote Sensing Images Based on an Anchor-Free Detection Model with a More Precise Foveal Area
+Oil Well Detection via Large-Scale and High-Resolution Remote Sensing Images Based on Improved YOLO v4
+Research on highway vehicle detection based on faster R-CNN and domain adaptation
+Accurate and efficient vehicle detection framework based on SSD algorithm
+Multiscale Feature Learning Based on Enhanced Feature Pyramid for Vehicle Detection
+YOLOv3-MT: A YOLOv3 using multi-target tracking for vehicle visual detection
+A lightweight Tiny-YOLOv3 vehicle detection approach
+Offset Detection of Grate Trolley's Side Plate Based on YOLOv4
+A fast and effective video vehicle detection method leveraging feature fusion and proposal temporal link
+On-road vehicle detection in varying weather conditions using faster R-CNN with several region proposal networks
+End-to-end trainable network for degraded license plate detection via vehicle-plate relation mining
+U-FPNDet: A one-shot traffic object detector based on U-shaped feature pyramid module
+ScanEV-A neural network-based tool for the automated detection of extracellular vesicles in TEM images
+A traffic flow estimation method based on unsupervised change detection
+Review on Vehicle Detection Technology for Unmanned Ground Vehicles
+Multi-object Tracking for Urban and Multilane Traffic: Building Blocks for Real-World Application
+Research on Traffic Target Detection Method Based on Improved YOLOv3
+Vehicle Detection and Tracking using YOLO and DeepSORT
+Forground-Guided Vehicle Perception Framework
+YOLOv4-5D: An Effective and Efficient Object Detector for Autonomous Driving
+Single-Image Real-Time Rain Removal Based on Depth-Guided Non-Local Features
+Defect detection of printed circuit board based on lightweight deep convolution network
+Real-time monitoring of traffic parameters
+Research on Object Detection Algorithm Based on Multilayer Information Fusion
+A steel surface defect inspection approach towards smart industrial monitoring
+Small vehicle classification in the wild using generative adversarial network
+Identification of distinguishing characteristics of intersections based on statistical analysis and data from video cameras
+Vehicle Detection with Self-Training for Adaptative Video Processing Embedded Platform
+Deeply Supervised Z-Style Residual Network Devotes to Real-Time Environment Perception for Autonomous Driving
+Traffic scene semantic segmentation using self -attention mechanism and bi-directional GRU to correlate context
+The Capacity of the Road Network: Data Collection and Statistical Analysis of Traffic Characteristics
+Uncertainty-based Object Detector for Autonomous Driving Embedded Platforms
+A lightweight vehicle detection and tracking technique for advanced driving assistance systems
+KL-DIVERGENCE-BASED REGION PROPOSAL NETWORK FOR OBJECT DETECTION
+A Lightweight CNN Model for Refining Moving Vehicle Detection From Satellite Videos
+A Robust Vehicle Detection Scheme for Intelligent Traffic Surveillance Systems in Smart Cities
+CODAN: Counting-driven Attention Network for Vehicle Detection in Congested Scenes
+Environmental Sensitivity Evaluation of Neural Networks in Unmanned Vehicle Perception Module
+Pyramid Spatial Context Features for Salient Object Detection
+A Classification Algorithm Based on Complex Number Feature
+Feature and Box Propagation for Video Vehicle Detection
+A noise-immune Kalman filter for short-term traffic flow forecasting
+Multi-task learning for quality assessment of fetal head ultrasound images
+Improving Faster R-CNN Framework for Fast Vehicle Detection
+A Multibranch Object Detection Method for Traffic Scenes
+An Efficient and Scene-Adaptive Algorithm for Vehicle Detection in Aerial Images Using an Improved YOLOv3 Framework
+Orientation- and Scale-Invariant Multi-Vehicle Detection and Tracking from Unmanned Aerial Videos
+Using Vehicle Synthesis Generative Adversarial Networks to Improve Vehicle Detection in Remote Sensing Images
+Traffic flow estimation with data from a video surveillance camera
+Assessment of Convolution Neural Networks for Wetland Mapping with Landsat in the Central Canadian Boreal Forest Region
+Vehicle Detection in Urban Traffic Surveillance Images Based on Convolutional Neural Networks with Feature Concatenation
+Depth-attentional Features for Single-image Rain Removal
+Joint Object Detection and Depth Estimation in Multiplexed Image
+Part-Aware Region Proposal for Vehicle Detection in High Occlusion Environment
+SSD-MSN: An Improved Multi-Scale Object Detection Network Based on SSD
+DALocNet: Improving Localization Accuracy for Domain Adaptive Object Detection
