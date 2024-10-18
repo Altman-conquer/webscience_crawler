@@ -9,6 +9,9 @@ from volcenginesdkarkruntime import Ark
 
 from settings import KIMI_API_KEY, DOUBAO_API_KEY
 
+from loguru import logger
+
+logger.add(f'logs/{time.strftime("%Y-%m-%d.%H-%M-%S", time.localtime(time.time()))}-debug.txt', level='DEBUG')
 
 def query_title_kimi(cell: str):
     client = OpenAI(
@@ -63,6 +66,7 @@ def remove_prefix(input: str, prefix: str):
 
 def main(input_file_path: str = None, output_file_path: str = None):
     # Read the Excel file
+    logger.warning(f'start process {input_file_path}')
     if input_file_path is None:
         df = pd.read_excel('author_title_input.xlsx', header=None)
     else:
@@ -78,7 +82,7 @@ def main(input_file_path: str = None, output_file_path: str = None):
             if pd.isna(cell) or cell == '':
                 continue
             if str(cell).find(',') == -1 or str(cell)[-1] == ',':
-                print(f'skip {cell}')
+                logger.info(f'skip {cell}')
                 tmp_result.append(cell)
                 continue
 
@@ -88,7 +92,7 @@ def main(input_file_path: str = None, output_file_path: str = None):
             if '无法查询' in res or '没有' in res or '未找到' in res or '无法' in res or '查询' in res or 'is not' in res or '不适用' in res or '无' in res \
                     or 's an ' in res or 's a ' in res:
                 tmp_result.append(cell)
-                print(cell)
+                logger.info(cell)
             else:
                 res = remove_prefix(res, f'{cell}，头衔：')
                 res = remove_prefix(res, f'{cell}的头衔是：')
@@ -99,7 +103,7 @@ def main(input_file_path: str = None, output_file_path: str = None):
                 res = remove_prefix(res, f'{str(cell).split(",")[0]} 是 ')
 
                 tmp_result.append(f'{cell}, {res}')
-                print(cell, res)
+                logger.info(cell, res)
 
             time.sleep(30)
 
@@ -114,6 +118,7 @@ def main(input_file_path: str = None, output_file_path: str = None):
     else:
         output_file_path = output_file_path.replace('.csv', '.xlsx')
         df_result.to_excel(output_file_path, index=False, header=False)
+    logger.warning(f'finish process {input_file_path}, output to {output_file_path}')
 
 if __name__ == '__main__':
     if not os.path.exists('author_title_output/'):

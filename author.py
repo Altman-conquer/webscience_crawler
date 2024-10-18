@@ -335,8 +335,12 @@ def main(urls: list[str]):
                     #      author in essay['authors']]
                     # )
 
+                    # row.extend(
+                    #     [translate_doubao(f'{author["name"]}, {author["location"]}') for
+                    #      author in essay['authors']]
+                    # )
                     row.extend(
-                        [translate_doubao(f'{author["name"]}, {author["location"]}') for
+                        [f'{author["name"]}, {author["location"]}' for
                          author in essay['authors']]
                     )
                 writer.writerow(row)
