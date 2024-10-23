@@ -12,6 +12,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
+from ccf.ccf_replace import get_all_ccfa_meetings
 from journal import get_journal_zone_kimi
 from translate import translate_doubao
 
@@ -185,6 +186,8 @@ def query_url(driver, essay_url):
         year = year[0].text.split('-')[0]
 
     zone = get_journal_zone(driver, journal)
+    if zone in get_all_ccfa_meetings():
+        zone = 'CCF A'
 
     return authors, journal, year, zone
 
@@ -258,6 +261,8 @@ def cataloge_page(url):
             else:
                 print(f'essay num: {len(essays)}')
                 break
+
+    print(f'essay num: {len(essays)}')
 
     for essay in essays:
         essay['authors'], essay['journal'], essay['year'], essay['zone'] = query_url(driver, essay['url'])
@@ -348,45 +353,61 @@ def main(urls: list[str]):
         print(f'error when processing {urls}, error: {e}')
 
 
-def filter(filter_journal: list[str] = None, data: list[str] = None, output_file_path: str = None):
+def filter(filter_journal: list[str] = None, data: pd.DataFrame = None, output_file_path: str = None):
     if filter_journal is None:
         with open('output_filter.txt', 'r', encoding='utf-8') as file:
             text = file.read()
             text = text.replace('\n\n', '\ntest\n')
             filter_journal = text.splitlines()
+    filter_journal = [journal.lower() for journal in filter_journal]
 
     if data is None:
-        with open('output.csv', 'r', encoding='utf-8') as file:
+        with open('output/SINet A Scale-Insensitive Convolutional Neural Network for Fast Vehicle Detection.csv', 'r', encoding='utf-8') as file:
             data = file.read().splitlines()
 
     result = []
 
+    # j = 0
+    # for i in range(0, len(data)):
+    #     if filter_journal[j] == 'test':
+    #         result.append('\n')
+    #         j += 1
+    #         continue
+    #     if data[i].split(',')[0] not in set(filter_journal):
+    #         continue
+    #     result.append(data[i] + '\n')
+    #     j += 1
+    #
+    #     if j > len(filter_journal) - 1:
+    #         break
+
+    remove_index = []
+
     j = 0
-    for i in range(0, len(data)):
+    for index, col in data.iterrows():
         if filter_journal[j] == 'test':
             result.append('\n')
             j += 1
             continue
-        if data[i].split(',')[0] not in set(filter_journal):
+        if str(data.iloc[index][0]).lower() in set(filter_journal):
             continue
-        result.append(data[i] + '\n')
+        remove_index.append(index)
         j += 1
 
         if j > len(filter_journal) - 1:
             break
-    # for i in data:
-    #     if i == ' ':
-    #         result.append('\n')
-    #     if i.split(',')[0] not in filter_journal:
-    #         continue
-    #     result.append(i + '\n')
 
-    if output_file_path is None:
-        with open('output_filtered.csv', 'w', newline='', encoding='utf-8') as csvfile:
-            csvfile.writelines(result)
-    else:
-        with open(output_file_path, 'w', newline='', encoding='utf-8') as csvfile:
-            csvfile.writelines(result)
+    for index in remove_index[::-1]:
+        data.drop(index, inplace=True)
+
+    data.to_excel(output_file_path, index=False, header=False)
+
+    # if output_file_path is None:
+    #     with open('output_filtered.csv', 'w', newline='', encoding='utf-8') as csvfile:
+    #         csvfile.writelines(result)
+    # else:
+    #     with open(output_file_path, 'w', newline='', encoding='utf-8') as csvfile:
+    #         csvfile.writelines(result)
 
 
 def auto_filter():
@@ -395,9 +416,10 @@ def auto_filter():
 
     def get_input_essay_name(input_file_name: str):
         input_file_name = input_file_name.replace('.xlsx', '')
-        input_file_name = input_file_name.replace('论文同行评价-2018-TITS-（总引用数）- ', '')
-        input_file_name = input_file_name.replace('论文同行评价-2018-TITS-（总引用数） - ', '')
-        input_file_name = sanitize_filename(input_file_name)
+        # input_file_name = input_file_name.replace('论文同行评价-2018-TITS-（总引用数）- ', '')
+        # input_file_name = input_file_name.replace('论文同行评价-2018-TITS-（总引用数） - ', '')
+        # input_file_name = sanitize_filename(input_file_name)
+        input_file_name = input_file_name.split('-')[-1]
         return input_file_name
 
     for input_file in input_files:
@@ -413,11 +435,12 @@ def auto_filter():
                 if os.path.exists(f'output/{output_file_name}'):
                     break
 
-        df = pd.read_excel(f'input/{input_file}')
-        filter_journals = df.iloc[1:, 1].to_list()
+        df = pd.read_excel(f'input/{input_file}', header=None)
+        filter_journals = df.iloc[:, 1].to_list()
 
-        with open(f'output/{output_file_name}', 'r', encoding='utf-8') as file:
-            data = file.read().splitlines()
+        data = pd.read_excel(f'output/{output_file_name}', header=None)
+        # with open(f'output/{output_file_name}', 'r', encoding='utf-8') as file:
+        #     data = file.read().splitlines()
 
         if not os.path.exists('output_filter/'):
             os.mkdir('output_filter/')
@@ -485,39 +508,39 @@ def get_file_name(url: list[str]):
 
 if __name__ == '__main__':
     # test()
-    get_file_name([
+    main([
         'https://webofscience.clarivate.cn/wos/alldb/summary/bcf63107-06d4-4c5d-87b9-73962fb158e4-0110e77550/date-descending/1',
         'https://webofscience.clarivate.cn/wos/alldb/summary/bcf63107-06d4-4c5d-87b9-73962fb158e4-0110e77550/date-descending/2',
         'https://webofscience.clarivate.cn/wos/alldb/summary/bcf63107-06d4-4c5d-87b9-73962fb158e4-0110e77550/date-descending/3',
     ])
-    get_file_name([
-        'https://webofscience.clarivate.cn/wos/alldb/summary/5cbdfa7b-735e-4f41-9ee2-49c8d8afc41f-0110e7c723/date-descending/1',
-        'https://webofscience.clarivate.cn/wos/alldb/summary/5cbdfa7b-735e-4f41-9ee2-49c8d8afc41f-0110e7c723/date-descending/2'])
-    get_file_name([
-        'https://webofscience.clarivate.cn/wos/alldb/summary/6807229e-9aca-4f2b-9bbd-95e66bcefe59-0110e7cf50/date-descending/1'])
-    get_file_name([
-        'https://webofscience.clarivate.cn/wos/alldb/summary/c2d62e63-b8c4-4cd0-869e-2087300e5c4b-0110e7d885/date-descending/1'])
-    get_file_name([
-        'https://webofscience.clarivate.cn/wos/alldb/summary/4c7678b8-4763-43c4-aa1a-3989b43bbd28-0110e7df99/date-descending/1'])
-    get_file_name([
-        'https://webofscience.clarivate.cn/wos/alldb/summary/1623c323-e38c-482c-99fe-686f69b8f345-0110e7e488/date-descending/1'])
-    get_file_name([
-        'https://webofscience.clarivate.cn/wos/alldb/summary/f3033b9a-aee7-45a1-9797-d83fa5dcb3c9-0110e80818/date-descending/1'])
-    get_file_name([
-        'https://webofscience.clarivate.cn/wos/alldb/summary/6c24a003-6005-4e66-afcd-6540c56b1b8e-0110fcb796/date-descending/1'])
-    get_file_name([
-        'https://webofscience.clarivate.cn/wos/alldb/summary/a43d9e6d-f8f9-4855-80e5-396203455349-0110e81494/date-descending/1'])
-    get_file_name([
-        'https://webofscience.clarivate.cn/wos/alldb/summary/c13c63aa-af10-4d73-96cc-41a42e464c35-0110e81c12/date-descending/1'])
-    get_file_name([
-        'https://webofscience.clarivate.cn/wos/alldb/summary/a94e0c73-b588-4923-8e63-6f84386e15af-0110e81f3b/date-descending/1'])
-    get_file_name([
-        'https://webofscience.clarivate.cn/wos/alldb/summary/4917ca88-b582-495c-8e00-912a1780c0a5-0110e823d0/date-descending/1'])
-    get_file_name([
-        'https://webofscience.clarivate.cn/wos/alldb/summary/e054d476-625f-4635-ac20-ca55397df531-0110e82a1f/date-descending/1'])
-
-    get_file_name([
-        'https://webofscience.clarivate.cn/wos/alldb/summary/6c24a003-6005-4e66-afcd-6540c56b1b8e-0110fcb796/date-descending/1'])
+    # main([
+    #     'https://webofscience.clarivate.cn/wos/alldb/summary/5cbdfa7b-735e-4f41-9ee2-49c8d8afc41f-0110e7c723/date-descending/1',
+    #     'https://webofscience.clarivate.cn/wos/alldb/summary/5cbdfa7b-735e-4f41-9ee2-49c8d8afc41f-0110e7c723/date-descending/2'])
+    # main([
+    #     'https://webofscience.clarivate.cn/wos/alldb/summary/6807229e-9aca-4f2b-9bbd-95e66bcefe59-0110e7cf50/date-descending/1'])
+    # main([
+    #     'https://webofscience.clarivate.cn/wos/alldb/summary/c2d62e63-b8c4-4cd0-869e-2087300e5c4b-0110e7d885/date-descending/1'])
+    # main([
+    #     'https://webofscience.clarivate.cn/wos/alldb/summary/4c7678b8-4763-43c4-aa1a-3989b43bbd28-0110e7df99/date-descending/1'])
+    # main([
+    #     'https://webofscience.clarivate.cn/wos/alldb/summary/1623c323-e38c-482c-99fe-686f69b8f345-0110e7e488/date-descending/1'])
+    # main([
+    #     'https://webofscience.clarivate.cn/wos/alldb/summary/f3033b9a-aee7-45a1-9797-d83fa5dcb3c9-0110e80818/date-descending/1'])
+    # main([
+    #     'https://webofscience.clarivate.cn/wos/alldb/summary/6c24a003-6005-4e66-afcd-6540c56b1b8e-0110fcb796/date-descending/1'])
+    # main([
+    #     'https://webofscience.clarivate.cn/wos/alldb/summary/a43d9e6d-f8f9-4855-80e5-396203455349-0110e81494/date-descending/1'])
+    # main([
+    #     'https://webofscience.clarivate.cn/wos/alldb/summary/c13c63aa-af10-4d73-96cc-41a42e464c35-0110e81c12/date-descending/1'])
+    # main([
+    #     'https://webofscience.clarivate.cn/wos/alldb/summary/a94e0c73-b588-4923-8e63-6f84386e15af-0110e81f3b/date-descending/1'])
+    # main([
+    #     'https://webofscience.clarivate.cn/wos/alldb/summary/4917ca88-b582-495c-8e00-912a1780c0a5-0110e823d0/date-descending/1'])
+    # main([
+    #     'https://webofscience.clarivate.cn/wos/alldb/summary/e054d476-625f-4635-ac20-ca55397df531-0110e82a1f/date-descending/1'])
+    #
+    # main([
+    #     'https://webofscience.clarivate.cn/wos/alldb/summary/6c24a003-6005-4e66-afcd-6540c56b1b8e-0110fcb796/date-descending/1'])
 
     # filter()
     # auto_filter()

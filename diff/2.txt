@@ -1,4 +1,3 @@
-SOENet: a multi-resolution network for sheep extraction from high-resolution remote sensing images
 CG-CFPANet: a multi-task network for built-up area extraction from SDGSAT-1 and Sentinel-2 remote sensing images
 Two-stage re-parameterization and sample disentanglement network for surveillance vehicle detection
 Accurate Representation Modeling and Interindividual Constraint Learning for Roadside Three-Dimensional Object Detection
@@ -28,7 +27,6 @@ An improved anchor-free method for traffic scene object detection
 Real-time vehicle target detection in inclement weather conditions based on YOLOv4
 A Fast and Accurate Real-Time Vehicle Detection Method Using Deep Learning for Unconstrained Environments
 ResiDualGAN: Resize-Residual DualGAN for Cross-Domain Remote Sensing Images Semantic Segmentation
-Deep Texture-Aware Features for Camouflaged Object Detection
 Representative Feature Alignment for Adaptive Object Detection
 PerspectiveNet: An Object Detection Method With Adaptive Perspective Box Network Based on Density-Aware
 A vehicle detection method based on disparity segmentation
@@ -128,7 +126,6 @@ Using Vehicle Synthesis Generative Adversarial Networks to Improve Vehicle Detec
 Traffic flow estimation with data from a video surveillance camera
 Assessment of Convolution Neural Networks for Wetland Mapping with Landsat in the Central Canadian Boreal Forest Region
 Vehicle Detection in Urban Traffic Surveillance Images Based on Convolutional Neural Networks with Feature Concatenation
-Depth-attentional Features for Single-image Rain Removal
 Joint Object Detection and Depth Estimation in Multiplexed Image
 Part-Aware Region Proposal for Vehicle Detection in High Occlusion Environment
 SSD-MSN: An Improved Multi-Scale Object Detection Network Based on SSD
